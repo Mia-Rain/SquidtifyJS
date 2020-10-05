@@ -1,0 +1,87 @@
+<body>
+<!-- /* <links> */ -->
+<link href="https://fonts.googleapis.com/css2?family=Chilanka&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<!-- /* <links> */ -->
+<!-- /* By: ThatGeekyWeeb */ -->
+<!DOCTYPE html>
+  <center class="header-b">Client Code Input</center>
+<p>
+  <button id="stbutton" onclick="myFunction()">Start</button>
+</p>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+function myFunction() {
+  var CLID; 
+  var CLSEC; 
+  swal("Client ID", {
+  content: "input",
+  closeOnEsc: false,
+  closeOnClickOutside: false,
+})
+.then((value) => {
+  sessionStorage.setItem('CLID', `${value}`);
+  window.CLID = sessionStorage.getItem('CLID');
+  swal("Client Secret", {
+  content: "input",
+  closeOnEsc: false,
+  closeOnClickOutside: false,
+ })
+ .then((value) => {
+  sessionStorage.setItem('CLSEC', `${value}`);
+  window.CLSEC = sessionStorage.getItem('CLSEC');
+  if (window.CLID === "") {
+  	swal("Oops!", "Client ID was not set!", "error");
+    var errorID = 'true';
+  } else if (window.CLSEC === "") {
+  	swal("Oops!", "Client Secret was not set!", "error");
+    var errorID = 'true';
+  } else if (window.CLSEC === "null" || window.CLID === "null" || window.CLSEC === "NULL" || window.CLID === "NULL") {
+  	swal("Oops!", "Something was set to NULL!", "error");
+    var errorID = 'true';
+  }
+  if (errorID != 'true') {
+  console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
+  window.location.replace('./res/index.html');
+  } else {
+  	document.getElementById('stbutton').innerHTML = 'Try Again';
+  }
+  });});
+}
+</script>
+<style>
+body {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  background: url("https://cdn.discordapp.com/attachments/739070489514868767/739724355029958686/clouds.png");
+}
+.header-b {
+    padding-top: 20px;
+    position: relative;
+    font-size: 50px;
+    font-family: 'Chilanka', bold;
+}
+label{
+  font-family: 'Chilanka', bold;
+}
+div{
+  text-align: center;
+}
+.SEC{
+  margin-right: 25px;
+}
+p{
+  text-align: center;
+  margin: auto;
+}
+button{
+  background-color: #ffc2ae;
+    border-radius: 3px;
+    border-width: 0.9px;
+    border-color: rgb(118, 118, 118);
+}
+</style>
+</body>
