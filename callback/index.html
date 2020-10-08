@@ -1,4 +1,29 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
+var code = urlParams.get('code');
+const CLID = sessionStorage.getItem('CLID');
+const CLSEC = sessionStorage.getItem('CLSEC');
+const redirect_uri = 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/';
+let params = {
+      CLID,
+      CLSEC,
+      redirect_uri,
+      code,
+      grant_type: "authorization_code"
+};
+axios({
+      method: "post",
+      url: "https://accounts.spotify.com/api/token",
+      params,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(response => {
+        sessionStorage.setItem('refresh_token', response.data.refresh_token);
+      })
+const refresh_token = sessionStorage.getItem('refresh_token');
+console.log(refresh_token);
 </script>
