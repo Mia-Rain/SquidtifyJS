@@ -30,7 +30,10 @@ axios({
         sessionStorage.setItem('refresh_token', response.data.refresh_token);
         console.log('authed');
       })
-      .catch(e => console.error(e.response.data));
+      .catch(error => {
+         console.log(error);
+         console.log(error.response);
+      });
 const refresh_token = sessionStorage.getItem('refresh_token');
 console.log(refresh_token);
 </script>
