@@ -45,7 +45,8 @@ function myFunction() {
   }
   if (errorID != 'true') {
   console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
-  window.location.replace('./res/index.html');
+    let scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
+  window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
   } else {
   	document.getElementById('stbutton').innerHTML = 'Try Again';
   }
