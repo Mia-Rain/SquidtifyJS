@@ -7,8 +7,8 @@ const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
 const redirect_uri = 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/';
 let params = {
-      CLID,
-      CLSEC,
+      client_id: CLID,
+      client_secret: CLSEC,
       redirect_uri,
       code,
       grant_type: "authorization_code"
