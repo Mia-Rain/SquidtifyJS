@@ -1,4 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
@@ -12,28 +12,19 @@ let params = {
       code,
       grant_type: "authorization_code"
 };
-axios({
-      method: "post",
-      url: "https://accounts.spotify.com/api/token",
-      params: {
-            client_id: CLID,
-            client_secret: CLSEC,
-            code,
-            grant_type: 'authorization_code',
-            redirect_uri: 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/'
-        },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
-      .then(response => {
-        sessionStorage.setItem('refresh_token', response.data.refresh_token);
-        console.log('authed');
-      })
-      .catch(error => {
-         console.log(error);
-         console.log(error.response);
-      });
+$.ajax({
+            type: 'POST',
+            url: "'https://accounts.spotify.com/api/token",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            dataType: 'json',
+            data: params,
+            success: function (response) {
+                console.log(response);
+                sessionStorage.setItem('refresh_token', response.data.refresh_token);
+                return response;
+		}
+))}
 const refresh_token = sessionStorage.getItem('refresh_token');
 console.log(refresh_token);
 </script>
