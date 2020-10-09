@@ -21,24 +21,23 @@ $.ajax({
             contentType: 'application/x-www-form-urlencoded; charset=utf-8',
             dataType: 'json',
             data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/', code, 'grant_type': "authorization_code" },
-            	success: function (response, data) {
-                console.log(response);
-		console.log(data);
-                sessionStorage.setItem('refresh_token', response.refresh_token);
-		}
+            		success: function (response, data) {
+                	console.log(response);
+			console.log(data);
+                	sessionStorage.setItem('refresh_token', response.refresh_token);
+	        }
 });
 window.refresh_token = sessionStorage.getItem('refresh_token');
-console.log(refresh_token);
 
 function auth(){
 	$.ajax({
-  	          type: 'POST',
-    	        url: 'https://accounts.spotify.com/api/token',
+  	      type: 'POST',
+    	      url: 'https://accounts.spotify.com/api/token',
       	      contentType: 'application/x-www-form-urlencoded',
-        	    data: { 'client_id': CLID, 'client_secret': CLSEC, 'grant_type': 'refresh_token', window.refresh_token },
+              data: { 'client_id': CLID, 'client_secret': CLSEC, 'grant_type': 'refresh_token', 'refresh_token': window.refresh_token },
       	      success: function (response, data) {
-									sessionStorage.setItem('access_token', response.access_token);
-    					}
+			sessionStorage.setItem('access_token', response.access_token);
+    	      }
 	});
 	window.access_token = sessionStorage.getItem('access_token');
 }
@@ -47,8 +46,8 @@ auth();
 function device_get(){
 auth();
 $.ajax({
-						type: 'GET',
-						url: "https://api.spotify.com/v1/me/player/devices", 
+	    type: 'GET',
+	    url: "https://api.spotify.com/v1/me/player/devices", 
             contentType: 'application/x-www-form-urlencoded',
             Accept: 'application/json',
             data: { 'access_token': window.access_token },
@@ -61,13 +60,13 @@ window.device = sessionStorage.getItem('device');
 function pause() {
 device_get();
 $.ajax({
-						type: 'PUT',
-						url: "https://api.spotify.com/v1/me/player/pause",
+	    type: 'PUT',
+	    url: "https://api.spotify.com/v1/me/player/pause",
             data: { device_id: window.device },
             headers: {
-            Authorization: 'Bearer ' + window.access_token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+           	 Authorization: 'Bearer ' + window.access_token,
+           	 'Accept': 'application/json',
+            	'Content-Type': 'application/json'
             },
             success: function () {
             		console.log('Paused');
@@ -77,13 +76,13 @@ $.ajax({
 function resume(){
 device_get();
 $.ajax({
-						type: 'PUT',
-						url: "https://api.spotify.com/v1/me/player/play",
+	    type: 'PUT',
+	    url: "https://api.spotify.com/v1/me/player/play",
             data: {},
             headers: {
-            Authorization: 'Bearer ' + window.access_token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            	Authorization: 'Bearer ' + window.access_token,
+            	'Accept': 'application/json',
+            	'Content-Type': 'application/json'
             },
             success: function () {
             		console.log('Resumed');
