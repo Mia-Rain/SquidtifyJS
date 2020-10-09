@@ -19,8 +19,9 @@ $.ajax({
             contentType: 'application/x-www-form-urlencoded; charset=utf-8',
             dataType: 'json',
             data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/', code, 'grant_type': "authorization_code" },
-            	success: function (response) {
+            	success: function (response, data) {
                 console.log(response);
+		console.log(data);
                 sessionStorage.setItem('refresh_token', response.refresh_token);
                 return response;
 		}
