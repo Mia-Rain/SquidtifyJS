@@ -7,13 +7,6 @@ console.log(urlParams.get('code'));
 var code = urlParams.get('code');
 const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
-let params = {
-      client_id: CLID,
-      client_secret: CLSEC,
-      redirect_uri: 'https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/',
-      code,
-      grant_type: "authorization_code"
-};
 $.ajax({
             type: 'POST',
             url: "https://accounts.spotify.com/api/token",
@@ -90,3 +83,8 @@ $.ajax({
 })
 }
 </script>
+<style>
+body {
+    background: radial-gradient(circle, rgba(177,173,246,1) 0%, rgba(181,140,223,1) 25%, rgba(248,151,255,1) 75%, rgba(255,187,215,1) 100%);
+}
+</style>
