@@ -1,3 +1,5 @@
+<button onclick="pause()">Pause</button>
+<button onclick="resume()">Resume</button>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
 var urlParams = new URLSearchParams(window.location.search);
@@ -28,4 +30,65 @@ $.ajax({
 });
 const refresh_token = sessionStorage.getItem('refresh_token');
 console.log(refresh_token);
+
+function auth(){
+	$.ajax({
+  	          type: 'POST',
+    	        url: 'https://accounts.spotify.com/api/token',
+      	      contentType: 'application/x-www-form-urlencoded',
+        	    data: { 'client_id': CLID, 'client_secret': CLSEC, 'grant_type': 'refresh_token', refresh_token },
+      	      success: function (response, data) {
+									sessionStorage.setItem('access_token', response.access_token);
+    					}
+	});
+	window.access_token = sessionStorage.getItem('access_token');
+}
+
+auth();
+function device_get(){
+auth();
+$.ajax({
+						type: 'GET',
+						url: "https://api.spotify.com/v1/me/player/devices", 
+            contentType: 'application/x-www-form-urlencoded',
+            Accept: 'application/json',
+            data: { 'access_token': window.access_token },
+            success: function (response, data) {
+               sessionStorage.setItem('device', response.devices[0].id);
+            }
+})
+window.device = sessionStorage.getItem('device');
+}
+function pause() {
+device_get();
+$.ajax({
+						type: 'PUT',
+						url: "https://api.spotify.com/v1/me/player/pause",
+            data: { device_id: window.device },
+            headers: {
+            Authorization: 'Bearer ' + window.access_token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            success: function () {
+            		console.log('Paused');
+            }
+})
+}
+function resume(){
+device_get();
+$.ajax({
+						type: 'PUT',
+						url: "https://api.spotify.com/v1/me/player/play",
+            data: {},
+            headers: {
+            Authorization: 'Bearer ' + window.access_token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            success: function () {
+            		console.log('Resumed');
+            }
+})
+}
 </script>
