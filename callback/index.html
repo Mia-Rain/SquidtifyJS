@@ -82,9 +82,75 @@ $.ajax({
             }
 })
 }
+
+auth();
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+    sessionStorage.setItem('uri', response.item.id)
+  }
+})
+uri = sessionStorage.getItem('uri');
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/tracks/' + uri,
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+    div = document.createElement("div");
+    div.classList.add("frame");
+    div.innerHTML = '<img class="center" id="album-image" src=' + response.album.images[0].url + '>';
+    document.body.appendChild(div);
+    sessionStorage.setItem('img', response.album.images[0].url);
+  }
+})
+
+setInterval(function() {
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+    sessionStorage.setItem('uri', response.item.id)
+  }
+})
+uri = sessionStorage.getItem('uri');
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/tracks/' + uri,
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+  	if ( response.album.images[0].url != document.getElementById("album-image").src) {
+      document.getElementById("album-image").src = response.album.images[0].url;
+    }
+  }
+})}, 3000);
 </script>
 <style>
 body {
     background: radial-gradient(circle, rgba(177,173,246,1) 0%, rgba(181,140,223,1) 25%, rgba(248,151,255,1) 75%, rgba(255,187,215,1) 100%);
+}
+.center {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 500px;
+   height: 500px;
+   margin-top: -250px; /* Half the height */
+   margin-left: -250px; /* Half the width */
+}
+.frame {
+    height: 560px; /* Can be anything */
+    position: relative;
+    margin-top: 50px;
 }
 </style>
