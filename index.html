@@ -72,7 +72,7 @@ function myFunction() {
        	window.CLSEC = sessionStorage.getItem('CLSEC');
        	setCookie('CLSEC', window.CLSEC, 60);
         console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
-    		window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
+    		window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/');
     	});
     });
   }
