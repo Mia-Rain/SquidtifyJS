@@ -35,7 +35,6 @@ function auth(){
 	window.access_token = sessionStorage.getItem('access_token');
 }
 
-auth();
 function device_get(){
 auth();
 $.ajax({
@@ -111,6 +110,17 @@ $.ajax({
 })
 
 setInterval(function() {
+$.ajax({
+  type: 'POST',
+  url: 'https://accounts.spotify.com/api/token',
+  contentType: 'application/x-www-form-urlencoded',
+  data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': window.refresh_token },
+  success: function (response, data) {
+	sessionStorage.setItem('access_token', response.access_token);
+  }
+});
+window.access_token = sessionStorage.getItem('access_token');
+}
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
