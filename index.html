@@ -83,7 +83,11 @@ function myFunction() {
     sessionStorage.setItem('CLID', getCookie('CLID'));
     window.CLID = sessionStorage.getItem('CLID');
     window.CLSEC = sessionStorage.getItem('CLSEC');
-    window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
+    if (window.CLSEC !== "" || window.CLSEC !== null || window.CLID !== "" || window.CLID !== null) {
+      window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
+    } else {
+      getID();
+    }
   } else {
   	getID();
   }
