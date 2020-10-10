@@ -67,7 +67,6 @@ swal("Client ID", {
       console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
       setCookie('CLID', window.CLID, 60);
       setCookie('CLSEC', widnow.CLSEC, 60);
-      window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
     } else {
   	  document.getElementById('stbutton').innerHTML = 'Try Again';
     }
@@ -81,15 +80,15 @@ function myFunction() {
   var checkSEC = getCookie('CLSEC');
   if ( checkID != "" || checkSEC != "" || checkSEC != null || checkID != null ) {
     sessionStorage.setItem('CLID', getCookie('CLID'));
+    sessionStorage.setItem('CLSEC', getCookie('CLSEC'));
     window.CLID = sessionStorage.getItem('CLID');
     window.CLSEC = sessionStorage.getItem('CLSEC');
-    if ( window.CLSEC != "" || window.CLSEC != null || window.CLID != "" || window.CLID != null ) {
-      window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
-    } else {
-      getID();
-    }
+    window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
   } else {
   	getID();
+    window.CLID = sessionStorage.getItem('CLID');
+    window.CLSEC = sessionStorage.getItem('CLSEC');
+    window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
   }
 }
 </script>
