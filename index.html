@@ -78,19 +78,15 @@ function myFunction() {
   var CLID; 
   var CLSEC;
   var checkID = getCookie('CLID');
-  if ( checkID != "" ) {
+  var checkSEC = getCookie('CLSEC');
+  if ( checkID !== "" || checkSEC !== "" || checkSEC !== null || checkID !== null) {
     sessionStorage.setItem('CLID', getCookie('CLID'));
+    window.CLID = sessionStorage.getItem('CLID');
+    window.CLSEC = sessionStorage.getItem('CLSEC');
+    window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
   } else {
   	getID();
   }
-var checkSEC = getCookie('CLSEC');
-  if (checkSEC != "") {
-    sessionStorage.setItem('CLSEC', getCookie('CLSEC'));
-  }
-  window.CLID = sessionStorage.getItem('CLID');
-  window.CLSEC = sessionStorage.getItem('CLSEC');
-  window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
-}
 </script>
 <style>
 body {
