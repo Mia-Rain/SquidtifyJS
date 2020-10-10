@@ -34,16 +34,10 @@ function getCookie(cname) {
   }
   return "";
 }
+const scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
 
-  
-function myFunction() {
-  var CLID; 
-  var CLSEC;
-  var checkID = getCookie('CLID');
-  if ( checkID != "" ) {
-    sessionStorage.setItem('CLID', getCookie('CLID'));
-  } else {
-    swal("Client ID", {
+function getID(){
+swal("Client ID", {
       content: "input",
       closeOnEsc: false,
       closeOnClickOutside: false,
@@ -73,21 +67,29 @@ function myFunction() {
       console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
       setCookie('CLID', window.CLID, 60);
       setCookie('CLSEC', widnow.CLSEC, 60);
-      let scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
       window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
     } else {
   	  document.getElementById('stbutton').innerHTML = 'Try Again';
     }
   });});
-}}
-  var checkSEC = getCookie('CLSEC');
+}
+  
+function myFunction() {
+  var CLID; 
+  var CLSEC;
+  var checkID = getCookie('CLID');
+  if ( checkID != "" ) {
+    sessionStorage.setItem('CLID', getCookie('CLID'));
+  } else {
+  	getID();
+  }
+var checkSEC = getCookie('CLSEC');
   if (checkSEC != "") {
     sessionStorage.setItem('CLSEC', getCookie('CLSEC'));
   }
   window.CLID = sessionStorage.getItem('CLID');
   window.CLSEC = sessionStorage.getItem('CLSEC');
   window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
-
 }
 </script>
 <style>
