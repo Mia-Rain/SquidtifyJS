@@ -79,11 +79,11 @@ function myFunction() {
   var CLSEC;
   var checkID = getCookie('CLID');
   var checkSEC = getCookie('CLSEC');
-  if ( checkID !== "" || checkSEC !== "" || checkSEC !== null || checkID !== null) {
+  if ( checkID != "" || checkSEC != "" || checkSEC != null || checkID != null ) {
     sessionStorage.setItem('CLID', getCookie('CLID'));
     window.CLID = sessionStorage.getItem('CLID');
     window.CLSEC = sessionStorage.getItem('CLSEC');
-    if (window.CLSEC !== "" || window.CLSEC !== null || window.CLID !== "" || window.CLID !== null) {
+    if ( window.CLSEC != "" || window.CLSEC != null || window.CLID != "" || window.CLID != null ) {
       window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
     } else {
       getID();
