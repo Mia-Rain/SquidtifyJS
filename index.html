@@ -13,45 +13,77 @@
 </p>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
+  
 function myFunction() {
   var CLID; 
-  var CLSEC; 
-  swal("Client ID", {
-  content: "input",
-  closeOnEsc: false,
-  closeOnClickOutside: false,
-})
-.then((value) => {
-  sessionStorage.setItem('CLID', `${value}`);
-  window.CLID = sessionStorage.getItem('CLID');
-  swal("Client Secret", {
-  content: "input",
-  closeOnEsc: false,
-  closeOnClickOutside: false,
- })
- .then((value) => {
-  sessionStorage.setItem('CLSEC', `${value}`);
-  window.CLSEC = sessionStorage.getItem('CLSEC');
-  if (window.CLID === "") {
-  	swal("Oops!", "Client ID was not set!", "error");
-    var errorID = 'true';
-  } else if (window.CLSEC === "") {
-  	swal("Oops!", "Client Secret was not set!", "error");
-    var errorID = 'true';
-  } else if (window.CLSEC === "null" || window.CLID === "null" || window.CLSEC === "NULL" || window.CLID === "NULL") {
-  	swal("Oops!", "Something was set to NULL!", "error");
-    var errorID = 'true';
-  }
-  if (errorID != 'true') {
-  console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
-    let scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
-  window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
+  var CLSEC;
+  var checkID = getCookie('CLID');
+  if ( checkID != "" ) {
+    sessionStorage.setItem('CLID', getCookie('CLID'));
   } else {
-  	document.getElementById('stbutton').innerHTML = 'Try Again';
-  }
+    swal("Client ID", {
+      content: "input",
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    })
+    .then((value) => {
+      sessionStorage.setItem('CLID', `${value}`);
+      window.CLID = sessionStorage.getItem('CLID');
+      swal("Client Secret", {
+      content: "input",
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    })
+    .then((value) => {
+       sessionStorage.setItem('CLSEC', `${value}`);
+       window.CLSEC = sessionStorage.getItem('CLSEC');
+       if (window.CLID === "") {
+  	    swal("Oops!", "Client ID was not set!", "error");
+        var errorID = 'true';
+       } else if (window.CLSEC === "") {
+  	    swal("Oops!", "Client Secret was not set!", "error");
+        var errorID = 'true';
+       } else if (window.CLSEC === "null" || window.CLID === "null" || window.CLSEC === "NULL" || window.CLID === "NULL") {
+  	    swal("Oops!", "Something was set to NULL!", "error");
+      var errorID = 'true';
+    }
+    if (errorID != 'true') {
+      console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
+      setCookie('CLID', window.CLID, 60);
+      setCookie('CLSEC', widnow.CLSEC, 60);
+      let scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
+      window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/' + '&show_dialog=true');
+    } else {
+  	  document.getElementById('stbutton').innerHTML = 'Try Again';
+    }
   });});
-}
+}}
+  var checkSEC = getCookie('CLSEC');
+  if (checkSEC != "") {
+    sessionStorage.setItem('CLSEC', getCookie('CLSEC');
+  }
 </script>
 <style>
 body {
