@@ -45,7 +45,9 @@ swal("Client ID", {
     .then((value) => {
       sessionStorage.setItem('CLID', `${value}`);
       window.CLID = sessionStorage.getItem('CLID');
-      swal("Client Secret", {
+    }
+});
+swal("Client Secret", {
       content: "input",
       closeOnEsc: false,
       closeOnClickOutside: false,
@@ -53,24 +55,15 @@ swal("Client ID", {
     .then((value) => {
        sessionStorage.setItem('CLSEC', `${value}`);
        window.CLSEC = sessionStorage.getItem('CLSEC');
-       if (window.CLID === "") {
-  	    swal("Oops!", "Client ID was not set!", "error");
-        var errorID = 'true';
-       } else if (window.CLSEC === "") {
-  	    swal("Oops!", "Client Secret was not set!", "error");
-        var errorID = 'true';
-       } else if (window.CLSEC === "null" || window.CLID === "null" || window.CLSEC === "NULL" || window.CLID === "NULL") {
-  	    swal("Oops!", "Something was set to NULL!", "error");
-      var errorID = 'true';
     }
-    if (errorID != 'true') {
+ });
+ if (errorID != 'true') {
       console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
       setCookie('CLID', window.CLID, 60);
       setCookie('CLSEC', widnow.CLSEC, 60);
-    } else {
+} else {
   	  document.getElementById('stbutton').innerHTML = 'Try Again';
-    }
-  });});
+}
 }
   
 function myFunction() {
