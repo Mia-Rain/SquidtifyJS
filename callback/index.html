@@ -411,6 +411,8 @@ $.ajax({
   success: function (response, data) {
    if (response.is_playing == true) {
 	document.getElementById("playbutton").classList = "fa fa-pause-circle fa-5x";
+   } else if if (response.is_playing == false) {
+	document.getElementById("playbutton").classList = "fa fa-play-circle fa-5x";
    } 
   }
 })
