@@ -35,7 +35,6 @@ function getCookie(cname) {
   return "";
 }
 const scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
-
   
 function myFunction() {
   var CLID; 
@@ -76,6 +75,11 @@ function myFunction() {
     	});
     });
   }
+}
+var checkID = getCookie('CLID');
+var checkSEC = getCookie('CLSEC');
+if ( checkID != "" && checkID != undefined && checkSEC != "" && checkSEC != undefined ) {
+  myFunction();
 }
 </script>
 <style>
