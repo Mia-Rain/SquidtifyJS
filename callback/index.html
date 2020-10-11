@@ -144,7 +144,7 @@ $.ajax({
   'Authorization': ' Bearer ' + window.access_token
   },
   success: function (response, data) {
-   if ( document.getElementById("album-image") = null ) {
+   if ( document.getElementById("album-image") == null ) {
   	if ( response != undefined && response.is_playing != false ){
 	  	$.ajax({
 			type: 'GET',
