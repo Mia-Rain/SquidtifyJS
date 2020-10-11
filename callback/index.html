@@ -133,6 +133,36 @@ $.ajax({
   }
 });
 window.access_token = sessionStorage.getItem('access_token');
+uri = sessionStorage.getItem('uri');
+
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': ' Bearer ' + window.access_token
+  },
+  success: function (response, data) {
+   if ( document.getElementById("album-image") = null ) {
+  	if ( response != undefined && response.is_playing != false ){
+	  	$.ajax({
+			type: 'GET',
+  			url: 'https://api.spotify.com/v1/tracks/' + uri,
+  			headers: {
+           	 		Authorization: 'Bearer ' + window.access_token,
+            		},
+ 			success: function (response, data) {
+    				div = document.createElement("div");
+   				div.classList.add("frame");
+    				div.innerHTML = '<img class="center" id="album-image" src=' + response.album.images[0].url + '>';
+    				document.body.appendChild(div);
+    				sessionStorage.setItem('img', response.album.images[0].url);
+  			}
+		});
+  	}}
+  }
+});
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
