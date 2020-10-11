@@ -284,10 +284,10 @@ auth();
        sessionStorage.setItem('playback', 'paused');}
    	} 
 });
-if ( sessionStorage.getItem('playback') == 'playing' && sessionStorage.getItem('replay') == 'resumed' ) {
+if ( sessionStorage.getItem('playback') == 'playing' && sessionStorage.getItem('replay') == 'resumed' || sessionStorage.getItem('replay') == undefined ) {
       pause();
       sessionStorage.setItem('replay', 'paused');
-} else if ( sessionStorage.getItem('playback') == 'paused' && sessionStorage.getItem('replay') == 'paused' ) {
+} else if ( sessionStorage.getItem('playback') == 'paused' && sessionStorage.getItem('replay') == 'paused' || sessionStorage.getItem('replay') == undefined ) {
       resume();
       sessionStorage.setItem('replay', 'resumed');
     }
