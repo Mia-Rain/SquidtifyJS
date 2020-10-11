@@ -292,6 +292,34 @@ if ( sessionStorage.getItem('playback') == 'playing' ) {
       sessionStorage.setItem('replay', 'resumed');
     }
 }
+function previousTrack() {
+device_get();
+$.ajax({
+  type: 'post',
+  url: 'https://api.spotify.com/v1/me/player/previous',
+  data: { device_id: window.device },
+  headers: {
+  'Authorization': ' Bearer ' + window.access_token
+  },
+  success: function (response, data) {
+	console.log(data)
+  }
+});
+}
+function nextTrack() {
+device_get();
+$.ajax({
+  type: 'post',
+  url: 'https://api.spotify.com/v1/me/player/next',
+  data: { device_id: window.device },
+  headers: {
+  'Authorization': ' Bearer ' + window.access_token
+  },
+  success: function (response, data) {
+	console.log(data)
+  }
+});
+}
 auth();
 $.ajax({
 	type: 'GET',
@@ -304,7 +332,6 @@ $.ajax({
   }
 })
 uri = sessionStorage.getItem('uri');
-
 setInterval(function() {
 $.ajax({
   type: 'POST',
