@@ -279,10 +279,10 @@ auth();
 	            },
 	  success: function (response, data) {
 	   if ( response.is_playing == true  ) {
-       sessionStorage.setItem('playback', 'playing');
-   	 } else if ( response.actions.disallows.pausing == true && response.is_playing != false ) {
-       sessionStorage.setItem('playback', 'paused');}
-   	} 
+       		sessionStorage.setItem('playback', 'playing');
+   	   } else if ( response.is_playing == false ) {
+       		sessionStorage.setItem('playback', 'paused');}
+   	   } 
 });
 if ( sessionStorage.getItem('playback') == 'playing' ) {
       pause();
