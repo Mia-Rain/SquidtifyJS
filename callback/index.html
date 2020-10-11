@@ -323,6 +323,44 @@ $.ajax({
   }
 });
 }
+function shuffle() {
+auth();
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+    if ( response.shuffle_state == true ) {
+		 $.ajax({
+			type: 'PUT',
+    		url: 'https://api.spotify.com/v1/me/player/shuffle?state=false',
+  			headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  			success: function (response, data) {
+				console.log(data);
+  			},
+			error: function (error) {
+        		console.log(error);
+    		}
+  		})
+	} else if ( response.shuffle_state == false ) {
+		  $.ajax({
+			type: 'PUT',
+    		url: 'https://api.spotify.com/v1/me/player/shuffle?state=true',
+  			headers: {
+           	 	Authorization: 'Bearer ' + window.access_token,
+    		},
+  			success: function (response, data) {
+				console.log(data);
+  			},
+			error: function (error) {
+        		console.log(error);
+			}
+		});}}
+});}
 auth();
 $.ajax({
 	type: 'GET',
