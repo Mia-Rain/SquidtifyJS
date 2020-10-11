@@ -357,5 +357,34 @@ $.ajax({
       document.getElementById("track-art").style.backgroundImage = 'URL("' + response.album.images[0].url + '")';
     }
 	 }
-})}, 3000);
+})
+$.ajax({
+  type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': ' Bearer ' + window.access_token
+  },
+  success: function (response, data) {
+	if ( document.getElementById("track-name").innerHTML != response.item.name) {
+	document.getElementById("track-name").innerHTML = response.item.name 
+	}
+  }
+})
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': ' Bearer ' + window.access_token
+  },
+  success: function (response, data) {
+	if ( document.getElementById("track-artist").innerHTML != response.item.artists[0].name) {
+	document.getElementById("track-artist").innerHTML = response.item.artists[0].name
+	}
+  }
+})
+}, 3000);
 </script>
