@@ -38,7 +38,7 @@
 	<div class="current-time">00:00</div> 
 	<input type="range" min="1" max="100"
 		value="0" class="seek_slider" onchange="seekTo()"> 
-	<div class="total-duration">00:00</div> 
+	<div id="durr" class="total-duration">00:00</div> 
 	</div>
 
 	<!-- Define the section for displaying the volume slider-->
@@ -273,6 +273,20 @@ $.ajax({
             }
 })
 }
+function seekTo() {
+console.log('seeking');
+seek_slider = document.querySelector(".seek_slider");
+seek = sessionStorage.getItem('durr') * (seek_slider.value / 100);
+console.log(seek);
+$.ajax({
+	type: 'PUT',
+  url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + seek,
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+  },
+  success: function (response, data) {console.log(response);}
+})
+}
 function pauseplay() {
 auth();
 	$.ajax({
@@ -455,6 +469,26 @@ $.ajax({
       document.getElementById("track-art").style.backgroundImage = 'URL("' + response.album.images[0].url + '")';
     }
 	 }
+})
+$.ajax({
+	type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  success: function (response, data) {
+  	$.ajax({
+    	type: 'GET',
+  		url: 'https://api.spotify.com/v1/tracks/' + response.item.id,
+      headers: {
+           	 Authorization: 'Bearer ' + window.access_token,
+            },
+  	success: function (response, data) {
+    	sessionStorage.setItem('durr', response.duration_ms);
+    	document.getElementById("durr").innerHTML = millisToMinutesAndSeconds(response.duration_ms);
+    }
+    })
+   }
 })
 $.ajax({
   type: 'GET',
