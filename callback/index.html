@@ -197,6 +197,11 @@ console.log(urlParams.get('code'));
 var code = urlParams.get('code');
 const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
+function millisToMinutesAndSeconds(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
 $.ajax({
             type: 'POST',
             url: "https://accounts.spotify.com/api/token",
