@@ -315,6 +315,11 @@ if ( sessionStorage.getItem('playback') == 'playing' ) {
       sessionStorage.setItem('replay', 'resumed');
     }
 }
+document.body.onkeyup = function(e){
+    if(e.keyCode == 32){
+       pauseplay();
+    }
+}
 function prevTrack() {
 device_get();
 $.ajax({
