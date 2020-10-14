@@ -191,6 +191,12 @@ cursor: pointer;
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+console.stdlog = console.log.bind(console);
+console.logs = [];
+console.log = function(){
+    console.logs.push(Array.from(arguments));
+    console.stdlog.apply(console, arguments);
+}
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
 var code = urlParams.get('code');
