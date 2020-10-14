@@ -479,9 +479,8 @@ $.ajax({
 		icon: "error",
 		buttons: true,
 		dangerMode: true,
-		button: "Resume",
 	}).then((value) => {
-		if (`${value}` == true) {
+		if (`${value}` == "true") {
 			resume();
 		} else {console.error('Resume was refussed, you should reload the page, as it is broken now... Addtionally remeber to start playback')}
 	})
