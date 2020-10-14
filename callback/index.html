@@ -412,13 +412,13 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
   },
   success: function (response, data) {
-    if ( device_get() != undefined && response.shuffle_state == true ) {
+    if ( sessionStorage.setItem('device') != undefined && response.shuffle_state == true ) {
 		if ( document.getElementById("shuffle").style.color != "darkorchid" ) {
 			document.getElementById("shuffle").style.color = "darkorchid" 
 		}
-    } else if ( device_get() != undefined && response.shuffle_state == false ) {
+    } else if ( sessionStorage.setItem('device') != undefined && response.shuffle_state == false ) {
 	    	document.getElementById("shuffle").style.color = ""
-    } else if ( device_get() == undefined ) {
+    } else if ( sessionStorage.setItem('device') == undefined ) {
 	    swal({
 		    icon: "error",
 		    title: "Whoops!",
