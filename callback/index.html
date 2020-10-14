@@ -420,7 +420,7 @@ $.ajax({
 		}
     } else if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == false ) {
 	    	document.getElementById("shuffle").style.color = ""
-    } else if ( sessionStorage.getitem('device') == undefined ) {
+    } else if ( sessionStorage.getItem('device') == undefined ) {
 	    swal({
 		    icon: "error",
 		    title: "Whoops!",
@@ -439,7 +439,7 @@ $.ajax({
   success: function (response, data) {
    if ( response != "" && response != undefined && response.is_playing == true ) {
 	document.getElementById("playbutton").classList = "fa fa-pause-circle fa-5x";
-   } else if (response.is_playing != true ) {
+   } else if ( response.is_playing != true || response != "" && response != undefined || response == "" || response == undefined ) {
 	document.getElementById("playbutton").classList = "fa fa-play-circle fa-5x";
    } 
   }
@@ -467,7 +467,7 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
             },
   success: function (response, data) {
-	if (sessionStorage.getItem('device') != 'not found' && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "") {
+	if (sessionStorage.getItem('device') != 'not found' && response != "" && response != undefined  && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "") {
    	 sessionStorage.setItem('uri', response.item.id);
 	}
   }
