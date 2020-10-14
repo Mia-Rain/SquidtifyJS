@@ -464,7 +464,7 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
             },
   success: function (response, data) {
-	if (sessionStorage.getItem('device') != 'not found' && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "")
+	if (sessionStorage.getItem('device') != 'not found' && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "") {
    	 sessionStorage.setItem('uri', response.item.id);
 	}
   }
