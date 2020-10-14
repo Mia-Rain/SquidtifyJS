@@ -8,12 +8,11 @@
 </head>
 <body>
 <div class="player"> 
-
 	<!-- Define the section for displaying details -->
 	<div class="details"> 
 	<div id="track-art" class="track-art"></div>
-	<div id="track-name" class="track-name">Track Name</div> 
-	<div id="track-artist" class="track-artist">Track Artist</div> 
+	<div id="track-name" class="track-name"></div> 
+	<div id="track-artist" class="track-artist"></div> 
 	</div> 
 
 	<!-- Define the section for displaying track buttons -->
@@ -37,7 +36,7 @@
 	<div class="current-time">00:00</div> 
 	<input type="range" min="1" max="100"
 		value="0" class="seek_slider" onchange="seekTo()"> 
-	<div id="durr" class="total-duration">00:00</div> 
+	<div id="durr" class="total-duration"></div> 
 	</div>
 
 	<!-- Define the section for displaying the volume slider-->
@@ -412,12 +411,19 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
   },
   success: function (response, data) {
-    if ( response.shuffle_state == true) {
+    if ( device_get() != undefined && response.shuffle_state == true ) {
 		if ( document.getElementById("shuffle").style.color != "darkorchid" ) {
 			document.getElementById("shuffle").style.color = "darkorchid" 
 		}
-    } else if ( response.shuffle_state == false ) {
+    } else if ( device_get() != undefined && response.shuffle_state == false ) {
 	    	document.getElementById("shuffle").style.color = ""
+    } else if ( device_get() == undefined ) {
+	    swal({
+		    icon: "error",
+		    title: "Whoops!",
+		    text: "No device was found, please turn one on!",
+	    });
+	    sessionStorage.setItem('device', 'not found');
     }
   }
 })
@@ -444,7 +450,7 @@ $.ajax({
   'Authorization': ' Bearer ' + window.access_token
   },
   success: function (response, data) {
-  	if ( response != undefined && response.is_playing != false ){
+  	if ( response != undefined && response.is_playing != false && response.is_playing != undefined){
        sessionStorage.setItem('playing', true);
   	} else {
        sessionStorage.setItem('playing', false);
@@ -458,16 +464,19 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
             },
   success: function (response, data) {
-    sessionStorage.setItem('uri', response.item.id)
+	if (sessionStorage.getItem('device') != 'not found' && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "")
+   	 sessionStorage.setItem('uri', response.item.id);
+	}
   }
 })
 uri = sessionStorage.getItem('uri');
+if ( uri != undefined && uri != "" && sessionStorage.getItem('uri') != undefined && sessionStorage.getItem('uri') != "" ) {
 $.ajax({
 	type: 'GET',
-  url: 'https://api.spotify.com/v1/tracks/' + uri,
-  headers: {
+ 	url: 'https://api.spotify.com/v1/tracks/' + uri,
+  	headers: {
            	 Authorization: 'Bearer ' + window.access_token,
-            },
+        },
   success: function (response, data) {
     if ( response != undefined && response != "" && response.album.images[0].url != "" && response.album.images[0].url != undefined ) {
       document.getElementById("track-art").style.backgroundImage = '';
@@ -487,6 +496,7 @@ $.ajax({
     }
   }
 })
+}
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -501,9 +511,11 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
             },
   	success: function (response, data) {
-    	sessionStorage.setItem('durr', response.duration_ms);
-    	document.getElementById("durr").innerHTML = millisToMinutesAndSeconds(response.duration_ms);
-    }
+		if ( response != undefined && response != "" && response.duration_ms != "" && response.duration_ms != undefined) {
+    			sessionStorage.setItem('durr', response.duration_ms);
+    			document.getElementById("durr").innerHTML = millisToMinutesAndSeconds(response.duration_ms);
+		} else { document.getElementById("durr").innerHTML = 'Unset'; }
+    	}
     })
    }
 })
@@ -516,24 +528,28 @@ $.ajax({
   'Authorization': ' Bearer ' + window.access_token
   },
   success: function (response, data) {
-	if ( document.getElementById("track-name").innerHTML != response.item.name) {
-	document.getElementById("track-name").innerHTML = response.item.name 
+	if ( response != undefined && response != "" && response.item.name != "" && response.item.name != undefined && response.item.name != "" ) {
+		if ( document.getElementById("track-name").innerHTML != response.item.name ) {
+			document.getElementById("track-name").innerHTML = response.item.name 
+		}
 	}
   }
 })
 $.ajax({
 	type: 'GET',
-  url: 'https://api.spotify.com/v1/me/player',
-  headers: {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'Authorization': ' Bearer ' + window.access_token
-  },
-  success: function (response, data) {
-	if ( document.getElementById("track-artist").innerHTML != response.item.artists[0].name) {
-	document.getElementById("track-artist").innerHTML = response.item.artists[0].name
-	}
-  }
+  	url: 'https://api.spotify.com/v1/me/player',
+  	headers: {
+  		'Accept': 'application/json',
+  		'Content-Type': 'application/json',
+  		'Authorization': ' Bearer ' + window.access_token
+  	},
+  	success: function (response, data) {
+		if ( response != undefined && response != "" && response.item.artists[0].name != "" && response.item.artists[0].name != undefined ) {
+			if ( document.getElementById("track-artist").innerHTML != response.item.artists[0].name ) {
+				document.getElementById("track-artist").innerHTML = response.item.artists[0].name
+			}
+		}
+  	}
 })
 }, 3000);
 // if ( document.getElementById("track-art").style.backgroundImage == "" && )
