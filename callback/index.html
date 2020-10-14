@@ -190,6 +190,7 @@ cursor: pointer;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
@@ -468,11 +469,24 @@ $.ajax({
            	 Authorization: 'Bearer ' + window.access_token,
             },
   success: function (response, data) {
-    if ( sessionStorage.getItem('playing') != false && sessionStorage.getItem('playing') == "true" ) {
+    if ( response != undefined && response != "" && response.album.images[0].url != "" && response.album.images[0].url == undefined ) {
       document.getElementById("track-art").style.backgroundImage = '';
       document.getElementById("track-art").style.backgroundImage = 'URL("' + response.album.images[0].url + '")';
+    } else {
+	swal({
+		title: "Whao", 
+		text: "The response from the server was not defined!", 
+		icon: "error",
+		buttons: true,
+		dangerMode: true,
+		button: "Resume",
+	}).then((value) => {
+		if (`${value}` == true) {
+			resume();
+		} else {console.error('Resume was refussed, you should reload the page, as it is broken now... Addtionally remeber to start playback')}
+	})
     }
-	 }
+  }
 })
 $.ajax({
 	type: 'GET',
@@ -523,4 +537,5 @@ $.ajax({
   }
 })
 }, 3000);
+// if ( document.getElementById("track-art").style.backgroundImage == "" && )
 </script>
