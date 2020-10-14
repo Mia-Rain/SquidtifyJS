@@ -520,6 +520,22 @@ $.ajax({
 })
 }
 $.ajax({
+  type: 'GET',
+  url: 'https://api.spotify.com/v1/me/player',
+  headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': ' Bearer ' + access_token
+  },
+  success: function (response, data) {
+  	if ( parseInt(document.querySelector('input[type=range]').value, 10) == 1) {
+		document.querySelector('input[type=range]').value = (response.progress_ms * 100) / response.item.duration_ms;
+    	} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 1) {
+    		document.querySelector('input[type=range]').value = (response.progress_ms * 100) / response.item.duration_ms;
+  	}
+  }
+})
+$.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
