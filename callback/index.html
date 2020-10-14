@@ -231,7 +231,7 @@ function auth(){
 	window.access_token = sessionStorage.getItem('access_token');
 }
 
-function device_get(){
+function device_get() {
 auth();
 $.ajax({
 	    type: 'GET',
@@ -241,6 +241,7 @@ $.ajax({
             data: { 'access_token': window.access_token },
             success: function (response, data) {
                sessionStorage.setItem('device', response.devices[0].id);
+	       console.log(response.devices[0].id);
             }
 })
 window.device = sessionStorage.getItem('device');
