@@ -286,14 +286,13 @@ $.ajax({
 }
 function seekTo() {
 console.log('seeking');
-seek_slider = document.querySelector(".seek_slider");
-seek = sessionStorage.getItem('durr') * (seek_slider.value / 100);
+seek = Math.floor(sessionStorage.getItem('durr') * (document.querySelector(".seek_slider").value / 100));
 console.log(seek);
 $.ajax({
-	type: 'PUT',
+  type: 'PUT',
   url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + seek,
   headers: {
-           	 Authorization: 'Bearer ' + window.access_token,
+  	Authorization: 'Bearer ' + window.access_token,
   },
   success: function (response, data) {console.log(response);}
 })
