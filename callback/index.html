@@ -314,11 +314,19 @@ auth();
    	   } 
 });
 if ( sessionStorage.getItem('playback') == 'playing' ) {
-      pause();
-      sessionStorage.setItem('replay', 'paused');
+	if (console.logs[console.logs.length - 1] == "Paused") {
+		resume();
+	} else { 
+      		pause();
+      		sessionStorage.setItem('replay', 'paused');
+	}
 } else if ( sessionStorage.getItem('playback') == 'paused' ) {
-      resume();
-      sessionStorage.setItem('replay', 'resumed');
+      if (console.logs[console.logs.length - 1] == "Resumed") {
+	      pause();
+      } else {
+      	resume();
+      	sessionStorage.setItem('replay', 'resumed');
+      }
     }
 }
 document.body.onkeyup = function(e){
