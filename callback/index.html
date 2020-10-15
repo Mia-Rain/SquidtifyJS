@@ -37,7 +37,7 @@
 
 	<!-- Define the section for displaying the seek slider-->
 	<div class="slider_container"> 
-	<div class="current-time">00:00</div> 
+	<div class="current-time"></div> 
 	<input type="range" min="1" max="100"
 		value="0" class="seek_slider" onchange="seekTo()"> 
 	<div id="durr" class="total-duration"></div> 
@@ -105,6 +105,7 @@ align items in a horizontal direction */
 display: flex; 
 flex-direction: row; 
 align-items: center; 
+margin-right: 30px;
 } 
 
 .playpause-track, 
@@ -297,7 +298,7 @@ player.addListener('account_error', ({ message }) => { console.error(message); }
 player.addListener('playback_error', ({ message }) => { console.error(message); });
 
 // Playback status updates
-player.addListener('player_state_changed', state => { console.log(state); });
+player.addListener('player_state_changed', state => { state });
 
 // Ready
 player.addListener('ready', ({ device_id }) => {
@@ -310,7 +311,6 @@ player.addListener('not_ready', ({ device_id }) => {
         console.log('Device ID has gone offline', device_id);
 });
 player.addListener("player_state_changed", (state) => {
-console.log(state);
 if (
     state && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id) && !state.paused && state.paused
     ) {
