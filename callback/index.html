@@ -222,13 +222,8 @@ cursor: pointer;
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script>
-console.stdlog = console.log.bind(console);
-console.logs = [];
-console.log = function(){
-    console.logs.push(Array.from(arguments));
-    console.stdlog.apply(console, arguments);
-}
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
 var code = urlParams.get('code');
@@ -268,7 +263,65 @@ function auth(){
 	});
 	window.access_token = sessionStorage.getItem('access_token');
 }
+function auth(){
+	$.ajax({
+  	      type: 'POST',
+    	      url: 'https://accounts.spotify.com/api/token',
+      	      contentType: 'application/x-www-form-urlencoded',
+              data: { 'client_id': CLID, 'client_secret': CLSEC, 'grant_type': 'refresh_token', 'refresh_token': window.refresh_token },
+      	      success: function (response, data) {
+			sessionStorage.setItem('access_token', response.access_token);
+    	      }
+	});
+	window.access_token = sessionStorage.getItem('access_token');
+}
+auth();
 
+console.stdlog = console.log.bind(console);
+console.logs = [];
+console.log = function(){
+    console.logs.push(Array.from(arguments));
+    console.stdlog.apply(console, arguments);
+}
+auth();
+window.onSpotifyWebPlaybackSDKReady = () => {
+      var token = sessionStorage.getItem('access_token');
+      var player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+});
+
+player.addListener('initialization_error', ({ message }) => { console.error(message); });
+player.addListener('authentication_error', ({ message }) => { console.error(message); });
+player.addListener('account_error', ({ message }) => { console.error(message); });
+player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+// Playback status updates
+player.addListener('player_state_changed', state => { console.log(state); });
+
+// Ready
+player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+        sessionStorage.setItem('devid', device_id);
+});
+
+// Not Ready
+player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+});
+player.addListener("player_state_changed", (state) => {
+console.log(state);
+if (
+    state && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id) && !state.paused && state.paused
+    ) {
+    console.log('Track ended');
+    setTrackEnd(true);
+  }
+state = state;
+});
+player.connect();
+};
+	
 function device_get() {
 auth();
 $.ajax({
@@ -516,6 +569,29 @@ if ( document.getElementById("track").classList.value.includes("fa-circle") != t
 }
 }
 uri = sessionStorage.getItem('uri');
+device_get();
+window.setTimeout(function() {
+if ( console.logs[console.logs.length - 1][0].includes("Ready") == true && sessionStorage.getItem('devid') != "" && sessionStorage.getItem('devid') != undefined ) { 
+  device_get();
+  data = {"device_ids": [window.device]};
+  $.ajax({
+    type: 'PUT',
+    url: 'https://api.spotify.com/v1/me/player',
+    data: JSON.stringify(data),
+    play: true,
+    headers: {
+                Authorization: 'Bearer ' + window.access_token,
+      },
+      success: function (response, data) {console.log(data)},
+      error: function(xhr, textStatus, error) {
+        console.log(xhr.responseText);
+        console.log(xhr.statusText);
+        console.log(textStatus);
+        console.log(error);
+    }
+  })
+}}, 5000);
+	
 setInterval(function() {
 $.ajax({
   type: 'POST',
@@ -691,7 +767,14 @@ $.ajax({
 			}
 		}
   	}
-})
+});
+window.onSpotifyWebPlaybackSDKReady = () => {
+      var token = sessionStorage.getItem('access_token');
+      var player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+});}
+
 }, 3000);
 // if ( document.getElementById("track-art").style.backgroundImage == "" && )
 </script>
