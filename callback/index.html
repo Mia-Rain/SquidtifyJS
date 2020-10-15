@@ -505,14 +505,17 @@ $.ajax({
 	            },
 	  success: function (response, data) {
 	   if ( response != undefined && response != "" && response.repeat_state == "context" ) {
-       		      document.getElementById("track").classList.add("context_loop");
+       		document.getElementById("track").classList.add("context_loop");
                 document.getElementById("loop").style.color = "darkorchid";
    	   } else if ( response != undefined && response != "" && response.repeat_state == "track") {
        		document.getElementById("track").classList.add("fa-circle");
-          document.getElementById("track").classList.remove("context_loop");
-          document.getElementById("loop").style.color = "darkorchid";
-          }
-   	   } 
+          	document.getElementById("track").classList.remove("context_loop");
+         	document.getElementById("loop").style.color = "darkorchid";
+          } else if ( response != undefined && response != "" && response.repeat_state != "" && response.repeat_state != undefined && response.repeat_state) {
+	  	document.getElementById("loop").style.color = "darkorchid";
+	  } /* During my test I noticed that sometimes the player would understand the value, the above should work as a catch all unless repeat is not enabled
+	  	I also added a request to the setInterval func, that should fix any issues caussed by a lack of device*/
+   	} 
 });
 function loop() {
 $.ajax({
@@ -708,7 +711,7 @@ $.ajax({
   success: function (response, data) {
   	if ( parseInt(document.querySelector('input[type=range]').value, 10) == 1 || parseInt(document.querySelector('input[type=range]').value, 10) >= 90) {
 		document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
-    	} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 0.50 || || ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) < document.querySelector('input[type=range]').value ) {
+    	} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 0.5 || ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) < document.querySelector('input[type=range]').value ) {
     		document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
   	}
   }
@@ -774,7 +777,25 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); }
 });}
-
+$.ajax({
+	  type: 'GET',
+	  url: 'https://api.spotify.com/v1/me/player',
+	  headers: {
+	           	 Authorization: 'Bearer ' + window.access_token,
+	            },
+	  success: function (response, data) {
+	   if ( response != undefined && response != "" && response.repeat_state == "context" ) {
+       		document.getElementById("track").classList.add("context_loop");
+                document.getElementById("loop").style.color = "darkorchid";
+   	   } else if ( response != undefined && response != "" && response.repeat_state == "track") {
+       		document.getElementById("track").classList.add("fa-circle");
+          	document.getElementById("track").classList.remove("context_loop");
+         	document.getElementById("loop").style.color = "darkorchid";
+          } else if ( response != undefined && response != "" && response.repeat_state != "" && response.repeat_state != undefined && response.repeat_state) {
+	  	document.getElementById("loop").style.color = "darkorchid";
+	  }
+	 }
+});
 }, 3000);
 // if ( document.getElementById("track-art").style.backgroundImage == "" && )
 </script>
