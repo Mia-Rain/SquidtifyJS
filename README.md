@@ -1,6 +1,6 @@
 # SquidtifyJS
 ***
-This repo is archived for the foreseeable future, as [`Spot(y)RIP`](https://github.com/ThatGeekyWeeb/SpotyRIP) makes me no longer required to use Spotify at all!
+I am rewriting SquidtifyJS, as such, this repo is likely to feature broken code, Your Use May Vary.
 ***
 JS implementation of Spotify's API &amp; SDK, using only client side JS ~ Completely on github pages!
 <p><img src="https://cdn.discordapp.com/attachments/723802289948721162/762584657744887828/SpuidtifyJS_ex1_invert.png" width="20%" align="right"></p>
@@ -36,5 +36,3 @@ JS implementation of Spotify's API &amp; SDK, using only client side JS ~ Comple
   9. Error handling for `ajax` requests
   10. Seek support
 ***
-Most of my work gets done on JSfiddle, you can see any previews of code I'm working on there
-> https://jsfiddle.net/user/ThatWeeb/fiddles/
