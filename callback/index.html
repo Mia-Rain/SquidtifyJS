@@ -197,14 +197,13 @@ i.fa-volume-up {
 padding: 10px; 
 } 
 
-/* Change the mouse cursor to a pointer 
-when hovered over */
-i.fa-play-circle, 
-i.fa-pause-circle, 
-i.fa-step-forward, 
-i.fa-step-backward { 
-cursor: pointer; 
+[class*="fa"] {
+    cursor: pointer;
 }
+/* 
+ This code is better then the old one, and applies to all buttons
+ I can use !important's if I need to override it
+*/
 .container_row {
     height: 50px;
     margin: 0;
