@@ -18,6 +18,9 @@
     		<div id="switch-right" onclick="wpRight();">
        			<i class="fas fa-angle-right fa-2x"></i>
     		</div>
+		<div onclick="li();">
+  			<i class="fas fa-info-circle fa-1x"></i>
+		</div>
 	</div>
 </a>
 <div class="player"> 
@@ -64,9 +67,32 @@
 	<i class="fa fa-volume-up"></i> 
 	</div> 
 </div> 
+<div id="li" style="display: block;">
+    <span>
+  These lovely backgrounds are provided 100% without copyright<br>
+                      Free of use!<br>
+         By: ThatGeekyWeeb<br>
+    </span>
+</div>
 </body> 
 </html> 
 <style>
+#li {
+    width: 70vw;
+    height: 70vh;
+    background: #C4B9B9;
+    display: none;
+    margin: auto;
+    padding: 70px;
+    text-align: center;
+    line-height: 3vh;
+    display: table !important;
+}
+#li span {
+    vertical-align: middle;
+    line-height: normal;
+    display: table-cell;
+}
 body { 
 background: radial-gradient(circle, rgba(177,173,246,1) 0%, rgba(181,140,223,1) 25%, rgba(248,151,255,1) 75%, rgba(255,187,215,1) 100%);
 transition: background-color .5s; 
@@ -236,7 +262,7 @@ div#reset-switcher {
     display: none;
 }
 
-a:hover div#reset-switcher {
+a:hover div#reset-switcher, a:hover div#li {
     display: block;
 }
 // Above hides the reset button, unless the user is using the wp-switcher
@@ -297,6 +323,7 @@ function auth(){
 }
 auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
+document.getElementById('li').style.display = 'none';
 // WP-SWITCHER 
 wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];	
 sessionStorage.setItem('num', 0);
@@ -330,6 +357,10 @@ var num;
     document.body.style.background = 'url(' + wps[parseInt(sessionStorage.getItem('num'))] + ')';
 }
 function wpReset() {document.body.style.background = null; sessionStorage.setItem('num', 0);}
+function li() {
+    if (document.querySelectorAll("[class=player]")[0].style.display  == 'none') {document.querySelectorAll("[class=player]")[0].style.display = null;} else {document.querySelectorAll("[class=player]")[0].style.display = 'none';}
+    if (document.getElementById('li').style.display == 'none') {document.getElementById('li').style.display = null;} else {document.getElementById('li').style.display = 'none';}
+} // licensing
 //
 console.stdlog = console.log.bind(console);
 console.logs = [];
