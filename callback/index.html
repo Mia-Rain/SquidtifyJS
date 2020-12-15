@@ -305,7 +305,7 @@ function wpRight() {
     } else {
         num+=1;
     }
-    document.body.style.background = wps[num];
+    document.body.style.background = 'url(' + wps[num] + ')';
 }
 function wpLeft() {
     if ( num === null) {
@@ -316,7 +316,7 @@ function wpLeft() {
 	num=wps.length;
 	num-=1;
     }
-    document.body.style.background = wps[num];
+    document.body.style.background = 'url(' + wps[num] + ')';
 }
 //
 console.stdlog = console.log.bind(console);
