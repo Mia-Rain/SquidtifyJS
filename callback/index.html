@@ -12,7 +12,7 @@
     		<div id="switch-left" onclick="wpLeft();">
         		<i class="fas fa-angle-left fa-2x"></i>
     		</div>
-		<div id="reset-switcher">
+		<div id="reset-switcher" onclick="wpReset();">
         		<i class="fas fa-times-circle fa-1x"></i>    
     		</div>
     		<div id="switch-right" onclick="wpRight();">
@@ -305,6 +305,8 @@ function wpRight() {
         sessionStorage.setItem('num', 0);
     } else if (parseInt(sessionStorage.getItem('num')) > (wps.length - 1)) {
     	sessionStorage.setItem('num',0);
+    } else if (parseInt(sessionStorage.getItem('num')) >= (wps.length)) {
+    	document.body.style.background = null;
     } else {
         sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) + 1);
     }
@@ -314,15 +316,18 @@ function wpLeft() {
 var num;
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
-    } else if ( sessionStorage.getItem('num') >= 0 ) {
+    } else if ( parseInt(sessionStorage.getItem('num')) > 0 ) {
         sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) - 1);
         console.log('less');
+    } else if ( parseInt(sessionStorage.getItem('num')) == 0 ) {
+	document.body.style.background = null;
     } else {
 	 sessionStorage.setItem('num', wps.length - 1);
     console.log('last');
     }
     document.body.style.background = 'url(' + wps[parseInt(sessionStorage.getItem('num'))] + ')';
 }
+function wpReset() {document.body.style.background = null;}
 //
 console.stdlog = console.log.bind(console);
 console.logs = [];
