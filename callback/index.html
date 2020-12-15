@@ -303,6 +303,8 @@ sessionStorage.setItem('num', 0);
 function wpRight() {
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
+    } else if (parseInt(sessionStorage.getItem('num')) < (wps.length - 1)) {
+    	sessionStorage.setItem('num',0);
     } else {
         sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) + 1);
     }
@@ -312,7 +314,7 @@ function wpLeft() {
 var num;
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
-    } else if ( sessionStorage.getItem('num') > 0 ) {
+    } else if ( sessionStorage.getItem('num') >= 0 ) {
         sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) - 1);
         console.log('less');
     } else {
