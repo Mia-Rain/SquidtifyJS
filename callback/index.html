@@ -311,10 +311,9 @@ function wpLeft() {
     if ( num === null) {
         var num=0;
     } else if ( num > 0 ) {
-        num-=1;
+        num=num - 1;
     } else {
-	num=wps.length;
-	num-=1;
+	num=wps.length - 1;
     }
     document.body.style.background = 'url(' + wps[num] + ')';
 }
