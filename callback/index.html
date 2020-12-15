@@ -7,16 +7,19 @@
 <link rel="icon" href="https://cdn.discordapp.com/attachments/723802289948721162/762584657744887828/SpuidtifyJS_ex1_invert.png">
 </head>
 <body>
-<div class="wp-switcher" style="display: flex;flex-direction: row;align-items: center;">
-    <div id="switch-left">
-        <i class="fas fa-angle-left fa-2x"></i>
-    </div><div id="reset-switcher">
-        <i class="fas fa-times-circle fa-1x"></i>    
-    </div>
-    <div id="switch-right">
-        <i class="fas fa-angle-right fa-2x"></i>
-    </div>
-</div>
+<a>
+	<div class="wp-switcher" style="display: flex;flex-direction: row;align-items: center;">
+    		<div id="switch-left">
+        		<i class="fas fa-angle-left fa-2x"></i>
+    		</div>
+		<div id="reset-switcher">
+        		<i class="fas fa-times-circle fa-1x"></i>    
+    		</div>
+    		<div id="switch-right">
+       			<i class="fas fa-angle-right fa-2x"></i>
+    		</div>
+	</div>
+</a>
 <div class="player"> 
 	<!-- Define the section for displaying details -->
 	<div class="details"> 
@@ -230,6 +233,14 @@ cursor: pointer;
 .fa-sync-alt {
    transform: scale(-1, 1);
 }
+div#reset-switcher {
+    display: none;
+}
+
+a:hover div#reset-switcher {
+    display: block;
+}
+// Above hides the reset button, unless the user is using the wp-switcher
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
