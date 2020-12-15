@@ -300,24 +300,25 @@ window.history.replaceState(null, null, window.location.pathname); // Emptys the
 // WP-SWITCHER 
 wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];	
 function wpRight() {
-var num;
-    if ( num === null) {
-        var num=0;
+    if ( sessionStorage.getItem('num') === null) {
+        sessionStorage.setItem('num', 0);
     } else {
-        var num=num + 1;
+        sessionStorage.setItem('num',sessionStorage.getItem('num') + 1);
     }
     document.body.style.background = 'url(' + wps[num] + ')';
 }
 function wpLeft() {
 var num;
-    if ( num === null) {
-        var num=0;
-    } else if ( num > 0 ) {
-        var num=num - 1;
+    if ( sessionStorage.getItem('num') === null) {
+        sessionStorage.setItem('num', 0);
+    } else if ( sessionStorage.getItem('num') > 0 ) {
+        sessionStorage.setItem('num',sessionStorage.getItem('num') - 1);
+        console.log('less');
     } else {
-	var num=wps.length - 1;
+	 sessionStorage.setItem('num', wps.length - 1);
+    console.log('last');
     }
-    document.body.style.background = 'url(' + wps[num] + ')';
+    document.body.style.background = 'url(' + wps[sessionStorage.getItem('num')] + ')';
 }
 //
 console.stdlog = console.log.bind(console);
