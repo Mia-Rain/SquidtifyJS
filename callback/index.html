@@ -9,13 +9,13 @@
 <body>
 <a>
 	<div class="wp-switcher" style="display: flex;flex-direction: row;align-items: center;">
-    		<div id="switch-left">
+    		<div id="switch-left" onclick="wpLeft();">
         		<i class="fas fa-angle-left fa-2x"></i>
     		</div>
 		<div id="reset-switcher">
         		<i class="fas fa-times-circle fa-1x"></i>    
     		</div>
-    		<div id="switch-right">
+    		<div id="switch-right" onclick="wpRight();">
        			<i class="fas fa-angle-right fa-2x"></i>
     		</div>
 	</div>
@@ -297,7 +297,28 @@ function auth(){
 }
 auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
-
+// WP-SWITCHER 
+wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];	
+function wpRight() {
+    if ( num === null) {
+        var num=0;
+    } else {
+        num+=1;
+    }
+    document.body.style.background = wps[num];
+}
+function wpLeft() {
+    if ( num === null) {
+        var num=0;
+    } else if ( num > 0 ) {
+        num-=1;
+    } else {
+	num=wps.length;
+	num-=1;
+    }
+    document.body.style.background = wps[num];
+}
+//
 console.stdlog = console.log.bind(console);
 console.logs = [];
 console.log = function(){
