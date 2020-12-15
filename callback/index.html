@@ -300,20 +300,22 @@ window.history.replaceState(null, null, window.location.pathname); // Emptys the
 // WP-SWITCHER 
 wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];	
 function wpRight() {
+var num;
     if ( num === null) {
         var num=0;
     } else {
-        num+=1;
+        var num+=1;
     }
     document.body.style.background = 'url(' + wps[num] + ')';
 }
 function wpLeft() {
+var num;
     if ( num === null) {
         var num=0;
     } else if ( num > 0 ) {
-        num=num - 1;
+        var num=num - 1;
     } else {
-	num=wps.length - 1;
+	var num=wps.length - 1;
     }
     document.body.style.background = 'url(' + wps[num] + ')';
 }
