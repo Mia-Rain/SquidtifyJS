@@ -307,6 +307,7 @@ function wpRight() {
     	sessionStorage.setItem('num',0);
     } else if (parseInt(sessionStorage.getItem('num')) + 1 == (wps.length)) {
     	document.body.style.background = null;
+	sessionStorage.setItem('num', 0);
     } else {
         sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) + 1);
     }
