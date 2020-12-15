@@ -304,22 +304,22 @@ function wpRight() {
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
     } else {
-        sessionStorage.setItem('num',sessionStorage.getItem('num') + 1);
+        sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) + 1);
     }
-    document.body.style.background = 'url(' + wps[sessionStorage.getItem('num')] + ')';
+    document.body.style.background = 'url(' + wps[parseInt(sessionStorage.getItem('num'))] + ')';
 }
 function wpLeft() {
 var num;
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
     } else if ( sessionStorage.getItem('num') > 0 ) {
-        sessionStorage.setItem('num',sessionStorage.getItem('num') - 1);
+        sessionStorage.setItem('num',parseInt(sessionStorage.getItem('num')) - 1);
         console.log('less');
     } else {
 	 sessionStorage.setItem('num', wps.length - 1);
     console.log('last');
     }
-    document.body.style.background = 'url(' + wps[sessionStorage.getItem('num')] + ')';
+    document.body.style.background = 'url(' + wps[parseInt(sessionStorage.getItem('num'))] + ')';
 }
 //
 console.stdlog = console.log.bind(console);
