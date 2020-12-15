@@ -297,6 +297,7 @@ function auth(){
 	window.access_token = sessionStorage.getItem('access_token');
 }
 auth();
+window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
 
 console.stdlog = console.log.bind(console);
 console.logs = [];
