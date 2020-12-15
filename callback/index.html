@@ -299,13 +299,14 @@ auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
 // WP-SWITCHER 
 wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];	
+sessionStorage.setItem('num', 0);
 function wpRight() {
     if ( sessionStorage.getItem('num') === null) {
         sessionStorage.setItem('num', 0);
     } else {
         sessionStorage.setItem('num',sessionStorage.getItem('num') + 1);
     }
-    document.body.style.background = 'url(' + wps[num] + ')';
+    document.body.style.background = 'url(' + wps[sessionStorage.getItem('num')] + ')';
 }
 function wpLeft() {
 var num;
