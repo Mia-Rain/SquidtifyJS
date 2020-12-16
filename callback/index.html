@@ -742,11 +742,13 @@ $.ajax({
   'Authorization': ' Bearer ' + access_token
   },
   success: function (response, data) {
-  	if ( parseInt(document.querySelector('input[type=range]').value, 10) == 1 || parseInt(document.querySelector('input[type=range]').value, 10) >= 90) {
-		document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
-    	} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 0.5 || ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) < document.querySelector('input[type=range]').value ) {
-    		document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
-  	}
+	if (sessionStorage.getItem('device') != "null" || response.progress_ms !== undefined || response.progress_ms !== null) {
+  		if ( parseInt(document.querySelector('input[type=range]').value, 10) == 1 || parseInt(document.querySelector('input[type=range]').value, 10) >= 90) {
+			document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
+    		} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 0.5 || ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) < document.querySelector('input[type=range]').value ) {
+    			document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
+  		} 
+	}
   }
 })
 $.ajax({
