@@ -13,15 +13,14 @@ JS implementation of Spotify's API &amp; SDK, using only client side JS ~ Comple
   4. Head [here](https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS), and press `start`
 ***
 ### Planned Features
-  1. Track & Context loop support
-  2. Embedded SDK player
-  3. Search Support
-  4. Playlist Support
-  5. Modify Support (Maybe...)
-  6. Proper redirect from Setup Page
-  7. Album Support
-  8. Artist Support
-  9. Volume support (Bars for these are currently Placeholders)
+  1. Embedded SDK player
+  2. Search Support
+  3. Playlist Support
+  4. Modify Support (Maybe...)
+  5. Proper redirect from Setup Page
+  6. Album Support
+  7. Artist Support
+  8. Volume support (Bars for these are currently Placeholders)
   > These features may be added in any order
 ***
 ### Present Features
@@ -35,4 +34,5 @@ JS implementation of Spotify's API &amp; SDK, using only client side JS ~ Comple
   8. Automattic code request when Cookie is present
   9. Error handling for `ajax` requests
   10. Seek support
+  11. Track & Context loop support
 ***
