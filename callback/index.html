@@ -381,6 +381,9 @@ $.ajax({
             success: function (response, data) {
                sessionStorage.setItem('device', response.devices[0].id);
 	       console.log(response.devices[0].id);
+	       if (response.devices[0].id === null) {
+	       		sessionStorage.setItem('device', null);
+	       }
             }
 })
 window.device = sessionStorage.getItem('device');
@@ -621,29 +624,9 @@ if ( document.getElementById("track").classList.value.includes("fa-circle") != t
 }
 uri = sessionStorage.getItem('uri');
 device_get();
-window.setTimeout(function() {
-if ( console.logs[console.logs.length - 1][0].includes("Ready") == true && sessionStorage.getItem('devid') != "" && sessionStorage.getItem('devid') != undefined ) { 
-  device_get();
-  data = {"device_ids": [window.device]};
-  $.ajax({
-    type: 'PUT',
-    url: 'https://api.spotify.com/v1/me/player',
-    data: JSON.stringify(data),
-    play: true,
-    headers: {
-                Authorization: 'Bearer ' + window.access_token,
-      },
-      success: function (response, data) {console.log(data)},
-      error: function(xhr, textStatus, error) {
-        console.log(xhr.responseText);
-        console.log(xhr.statusText);
-        console.log(textStatus);
-        console.log(error);
-    }
-  })
-}}, 5000);
 	
 setInterval(function() {
+device_get();
 $.ajax({
   type: 'POST',
   url: 'https://accounts.spotify.com/api/token',
@@ -668,7 +651,7 @@ $.ajax({
 		}
     } else if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == false ) {
 	    	document.getElementById("shuffle").style.color = ""
-    } else if ( sessionStorage.getItem('device') == undefined ) {
+    } else if ( sessionStorage.getItem('device') == undefined || sessionStorage.getItem('device') == 'not found') {
 	    swal({
 		    icon: "error",
 		    title: "Whoops!",
@@ -819,12 +802,6 @@ $.ajax({
 		}
   	}
 });
-window.onSpotifyWebPlaybackSDKReady = () => {
-      var token = sessionStorage.getItem('access_token');
-      var player = new Spotify.Player({
-        name: 'Web Playback SDK Quick Start Player',
-        getOAuthToken: cb => { cb(token); }
-});}
 $.ajax({
 	  type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
