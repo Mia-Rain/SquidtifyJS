@@ -653,7 +653,7 @@ $.ajax({
 		}
     } else if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == false ) {
 	    	document.getElementById("shuffle").style.color = ""
-    } else if ( sessionStorage.getItem('device') == undefined || sessionStorage.getItem('device') == 'not found') {
+    } else if ( sessionStorage.getItem('device') == "null" || sessionStorage.getItem('device') == 'not found' || sessionStorage.getItem('device') === null) {
 	    swal({
 		    icon: "error",
 		    title: "Whoops!",
