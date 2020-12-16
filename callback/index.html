@@ -381,7 +381,7 @@ $.ajax({
             success: function (response, data) {
                sessionStorage.setItem('device', response.devices[0].id);
 	       console.log(response.devices[0].id);
-	       if (response.devices[0].id === null) {
+	       if (response.devices[0] === null || response.devices[0] === undefined) {
 	       		sessionStorage.setItem('device', null);
 	       }
             }
