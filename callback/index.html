@@ -654,6 +654,17 @@ $.ajax({
     }
   }
 })
+auth();
+	$.ajax({
+		type: 'GET',
+	  url: 'https://api.spotify.com/v1/me/player',
+	  headers: {
+	           	 Authorization: 'Bearer ' + window.access_token,
+	            },
+	  success: function (response, data) {
+        	document.querySelectorAll("[class=slider_container] input")[1].value = response.device.volume_percent; // Sets volume slider to current state
+   	  } 
+});
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
