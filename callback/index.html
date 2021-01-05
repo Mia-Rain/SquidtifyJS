@@ -638,7 +638,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   player.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-	devid = [window.device]; $.ajax({
+    devid = [device_id]; $.ajax({
 		type: 'PUT', 
 		url: 'https://api.spotify.com/v1/me/player', 
 		headers: {
@@ -652,9 +652,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
 		// 			FIX ME
 		}
-	});
-  });
-
+  });});
   // Not Ready
   player.addListener('not_ready', ({ device_id }) => {
     console.log('Device ID has gone offline', device_id);
