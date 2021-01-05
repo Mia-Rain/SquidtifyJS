@@ -638,7 +638,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   player.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-    if (sessionStorage.getItem('device') != "null" && sessionStorage.getItem('SDK') != "true") {
 	devid = [window.device]; $.ajax({
 		type: 'PUT', 
 		url: 'https://api.spotify.com/v1/me/player', 
@@ -654,7 +653,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 		// 			FIX ME
 		}
 	});
-    }
   });
 
   // Not Ready
