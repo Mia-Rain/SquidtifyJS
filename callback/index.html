@@ -381,6 +381,16 @@ $.ajax({
             }
 })
 window.device = sessionStorage.getItem('device');
+if (sessionStorage.getItem('device') != "null" ) {
+devid = [window.device]; $.ajax({
+type: 'PUT', 
+url: 'https://api.spotify.com/v1/me/player', 
+headers: {
+Authorization: 'Bearer ' + window.access_token,
+}, 
+data:JSON.stringify({device_ids: devid}),
+});
+}
 }
 function pause() {
 device_get();
