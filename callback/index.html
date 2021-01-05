@@ -637,7 +637,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Ready
   player.addListener('ready', ({ device_id }) => {
-    devid = [device_id]; $.ajax({
+  function trans() {
+	  devid = [device_id]; $.ajax({
 		type: 'PUT', 
 		url: 'https://api.spotify.com/v1/me/player', 
 		headers: {
@@ -647,8 +648,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 		// if there was a no device error since the SDK is slow, we close the error dialog
 		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
 		// 			FIX ME
-  });
-      console.log('Trans-ed')
+  });}
+      trans(); console.log('Trans-ed');
+      if (swal.getState().isOpen == true){ swal.close(); } 
       console.log('Ready with Device ID', device_id);
   });
   // Not Ready
