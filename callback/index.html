@@ -270,6 +270,7 @@ a:hover div#reset-switcher, a:hover div#li {
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://sdk.scdn.co/spotify-player.js"></script> <!-- Load Spotify's SDK right before we start handling JS, otherwise things break -->
 <script>
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
@@ -617,7 +618,52 @@ if ( document.getElementById("track").classList.value.includes("fa-circle") != t
 }
 uri = sessionStorage.getItem('uri');
 device_get();
-	
+// SDK handling goes here
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const token = '[My Spotify Web API access token]';
+  const player = new Spotify.Player({
+    name: 'Web Playback SDK Quick Start Player',
+    getOAuthToken: callback => { auth(); callback(sessionStorage.getItem('access_token'));}
+  });
+
+  // Error handling
+  player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('account_error', ({ message }) => { console.error(message); });
+  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  // Playback status updates
+  player.addListener('player_state_changed', state => { console.log(state); });
+
+  // Ready
+  player.addListener('ready', ({ device_id }) => {
+    console.log('Ready with Device ID', device_id);
+  });
+
+  // Not Ready
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Device ID has gone offline', device_id);
+  });
+
+  // Connect to the player!
+  player.connect();
+
+player.addListener("player_state_changed", (state) => {
+
+console.log(state);
+if (
+    state
+    && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id)
+    && !state.paused
+    && state.paused
+    ) {
+    console.log('Track ended');
+    setTrackEnd(true);
+  }
+state = state;
+});
+};
+//
 setInterval(function() {
 device_get();
 $.ajax({
