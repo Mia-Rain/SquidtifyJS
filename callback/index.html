@@ -390,7 +390,8 @@ window.device = sessionStorage.getItem('device');
 		}, 
 		data:JSON.stringify({device_ids: devid}),
 	});
-	swal.close(); // if there was a no device error since the SDK is slow, we close the error dialog
+	if (swal.getState().isOpen == true){ swal.close(); } 
+		// if there was a no device error since the SDK is slow, we close the error dialog
 		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
 		// 			FIX ME
 	}
