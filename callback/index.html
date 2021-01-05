@@ -381,23 +381,7 @@ $.ajax({
             }
 })
 window.device = sessionStorage.getItem('device');
-	if (sessionStorage.getItem('device') != "null" && sessionStorage.getItem('SDK') != "true") {
-	devid = [window.device]; $.ajax({
-		type: 'PUT', 
-		url: 'https://api.spotify.com/v1/me/player', 
-		headers: {
-			Authorization: 'Bearer ' + window.access_token,
-		}, 
-		data:JSON.stringify({device_ids: devid}),
-		success: function () {
-			sessionStorage.setItem('SDK', true);
-			if (swal.getState().isOpen == true){ swal.close(); } 
-		// if there was a no device error since the SDK is slow, we close the error dialog
-		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
-		// 			FIX ME
-		}
-	});
-}}
+}
 function pause() {
 device_get();
 $.ajax({
@@ -639,7 +623,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   const token = '[My Spotify Web API access token]';
   const player = new Spotify.Player({
     name: 'Web Playback SDK Quick Start Player',
-    getOAuthToken: callback => { auth(); device_get(); ;callback(sessionStorage.getItem('access_token'));}
+    getOAuthToken: callback => { auth(); ;callback(sessionStorage.getItem('access_token'));}
   });
 
   // Error handling
@@ -654,6 +638,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   player.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
+    if (sessionStorage.getItem('device') != "null" && sessionStorage.getItem('SDK') != "true") {
+	devid = [window.device]; $.ajax({
+		type: 'PUT', 
+		url: 'https://api.spotify.com/v1/me/player', 
+		headers: {
+			Authorization: 'Bearer ' + window.access_token,
+		}, 
+		data:JSON.stringify({device_ids: devid}),
+		success: function () {
+			sessionStorage.setItem('SDK', true);
+			if (swal.getState().isOpen == true){ swal.close(); } 
+		// if there was a no device error since the SDK is slow, we close the error dialog
+		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
+		// 			FIX ME
+		}
+	});
+    }
   });
 
   // Not Ready
