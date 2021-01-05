@@ -663,7 +663,7 @@ state = state;
 };
   function trans(){
 	  if (sessionStorage.getItem('device') != 'null') {
-	  devid = [device_id]; $.ajax({
+	  devid = [window.device]; $.ajax({
 		type: 'PUT', 
 		url: 'https://api.spotify.com/v1/me/player', 
 		headers: {
