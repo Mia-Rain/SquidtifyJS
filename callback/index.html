@@ -381,7 +381,7 @@ $.ajax({
             }
 })
 window.device = sessionStorage.getItem('device');
-	if (sessionStorage.getItem('device') != "null" ) {
+	if (sessionStorage.getItem('device') != "null" && sessionStorage.getItem('SDK') != "true") {
 	devid = [window.device]; $.ajax({
 		type: 'PUT', 
 		url: 'https://api.spotify.com/v1/me/player', 
@@ -637,7 +637,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   const token = '[My Spotify Web API access token]';
   const player = new Spotify.Player({
     name: 'Web Playback SDK Quick Start Player',
-    getOAuthToken: callback => { auth(); callback(sessionStorage.getItem('access_token'));}
+    getOAuthToken: callback => { auth(); sessionStorage.setItem('SDK', true); device_get(); ;callback(sessionStorage.getItem('access_token'));}
   });
 
   // Error handling
