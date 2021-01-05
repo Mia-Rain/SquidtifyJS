@@ -389,13 +389,15 @@ window.device = sessionStorage.getItem('device');
 			Authorization: 'Bearer ' + window.access_token,
 		}, 
 		data:JSON.stringify({device_ids: devid}),
-	});
-	if (swal.getState().isOpen == true){ swal.close(); } 
+		success: function () {
+			sessionStorage.setItem('SDK', true);
+			if (swal.getState().isOpen == true){ swal.close(); } 
 		// if there was a no device error since the SDK is slow, we close the error dialog
 		// Bit of a hack, but I can't think of a good way to fix this, other then rewritting this entire part
 		// 			FIX ME
-	}
-}
+		}
+	});
+}}
 function pause() {
 device_get();
 $.ajax({
@@ -637,7 +639,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   const token = '[My Spotify Web API access token]';
   const player = new Spotify.Player({
     name: 'Web Playback SDK Quick Start Player',
-    getOAuthToken: callback => { auth(); sessionStorage.setItem('SDK', true); device_get(); ;callback(sessionStorage.getItem('access_token'));}
+    getOAuthToken: callback => { auth(); device_get(); ;callback(sessionStorage.getItem('access_token'));}
   });
 
   // Error handling
