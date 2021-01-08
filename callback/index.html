@@ -309,7 +309,7 @@ function auth(){
 			    sessionStorage.setItem('access_token', response.access_token);
     	      },
               error: function (xhr, ajaxOptions, thrownError) {
-                location.reload();
+               	window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/');
               }
 	});
 	window.access_token = sessionStorage.getItem('access_token');
@@ -627,8 +627,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   });
 
   // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('initialization_error', ({ message }) => { console.error(message);});
+  player.addListener('authentication_error', ({ message }) => { console.error(message); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/'); });
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
 
