@@ -9,6 +9,6 @@ JS implementation of Spotify's API &amp; SDK, using only client side JS ~ Comple
 ### Setup
   1. Create a new app at the [Spotify Dev Dashboard](https://developer.spotify.com/dashboard/applications)
   2. Remeber the `client_id` and `client_secret`, you will need them later
-  3. Edit settings, and add `http://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback` to `redirect_uri`'s (It's recommended to add both `http` & `https`)
+  3. Edit settings, and add `https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/` to `redirect_uri`'s (It's recommended to add both `http` & `https`)
   4. Head [here](https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS), and press `start`
 ***
