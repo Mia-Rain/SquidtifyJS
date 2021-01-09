@@ -627,8 +627,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   });
 
   // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message);});
-  player.addListener('authentication_error', ({ message }) => { console.error(message); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/'); });
+  player.addListener('initialization_error', ({ message }) => { console.error(message); sessionStorage.setItem('HDRM', undefined);});
+  player.addListener('authentication_error', ({ message }) => { console.error(message);}); // Needs buetter handling but lack of DRM is a issue, that even I have
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
 
@@ -673,8 +673,10 @@ state = state;
 		// 			FIX ME
   });
   }
-trans(); console.log('Trans-ed');
-if (swal.getState().isOpen == true){ swal.close(); }
+if ( sessionStorage.getItem('HDRM') != "undefined" || sessionStorage.getItem('device') != "null") {
+  trans(); console.log('Trans-ed');
+  if (swal.getState().isOpen == true){ swal.close(); }
+} // Only run trans() if SDK is working or device is unset
 //
 setInterval(function() {
 device_get();
