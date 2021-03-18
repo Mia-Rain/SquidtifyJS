@@ -322,7 +322,7 @@ var authT = {
 	},
 	get access_token() {
 		auth();
-		return authT.access_token
+		return this.access_token
 	},
 }
 authT.refresh_token = sessionStorage.getItem('refresh_token');
