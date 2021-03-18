@@ -645,7 +645,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Error handling
   player.addListener('initialization_error', ({ message }) => { console.error(message); sessionStorage.setItem('HDRM', undefined);});
-  p<layer.addListener('authentication_error', ({ message }) => { console.error(message); console.log("ERROR IN PLAYER AUTH"); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/'); });
+  p<layer.addListener('authentication_error', ({ message }) => { console.error(message); console.log("ERROR IN PLAYER AUTH");  }); //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/'); });
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
 
