@@ -9,7 +9,7 @@
 <!DOCTYPE html>
   <center class="header-b">Client Code Input</center>
 <p>
-  <button id="stbutton" onclick="myFunction()">Start</button>
+  <button id="stbutton" onclick="run()">Start</button>
 </p>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
@@ -17,7 +17,7 @@ function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));
   var expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/" + ";secure" + ";samesite=strict";
 }
 function getCookie(cname) {
   var name = cname + "=";
@@ -35,9 +35,9 @@ function getCookie(cname) {
   return "";
 }
 const scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
-  
-function myFunction() {
-  var CLID; 
+
+function run() {
+  var CLID;
   var CLSEC;
   var checkID = getCookie('CLID');
   var checkSEC = getCookie('CLSEC');
@@ -79,7 +79,7 @@ function myFunction() {
 var checkID = getCookie('CLID');
 var checkSEC = getCookie('CLSEC');
 if ( checkID != "" && checkID != undefined && checkSEC != "" && checkSEC != undefined ) {
-  myFunction();
+  run();
 }
 </script>
 <style>
