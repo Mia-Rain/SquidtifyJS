@@ -311,7 +311,7 @@ function auth(){
 			   	window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/');
 			  }
 	});
-	window.access_token = sessionStorage.getItem('access_token');
+	authT.access_token = sessionStorage.getItem('access_token');
 }
 var authT = {
 	set refresh_token(val) {
@@ -322,7 +322,7 @@ var authT = {
 	}
 	get access_token() {
 		auth();
-		return window.access_token
+		return authT.access_token
 	}
 }
 authT.refresh_token = sessionStorage.getItem('refresh_token');
@@ -382,7 +382,7 @@ $.ajax({
 		url: "https://api.spotify.com/v1/me/player/devices",
 			contentType: 'application/x-www-form-urlencoded',
 			Accept: 'application/json',
-			data: { 'access_token': window.access_token },
+			data: { 'access_token': authT.access_token },
 			success: function (response, data) {
 		if (response.devices[0] === null || response.devices[0] === undefined) {
 		   		sessionStorage.setItem('device', null);
@@ -402,7 +402,7 @@ $.ajax({
 		url: "https://api.spotify.com/v1/me/player/pause",
 			data: { device_id: window.device },
 			headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 		   	 'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
@@ -418,7 +418,7 @@ $.ajax({
 		url: "https://api.spotify.com/v1/me/player/play",
 			data: {},
 			headers: {
-				Authorization: 'Bearer ' + window.access_token,
+				Authorization: 'Bearer ' + authT.access_token,
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
@@ -435,7 +435,7 @@ $.ajax({
   type: 'PUT',
   url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + seek,
   headers: {
-  	Authorization: 'Bearer ' + window.access_token,
+  	Authorization: 'Bearer ' + authT.access_token,
   },
   success: function (response, data) {console.log(response);}
 })
@@ -446,7 +446,7 @@ auth();
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
 	  headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 				},
 	  success: function (response, data) {
 	   if ( response.is_playing == true  ) {
@@ -483,7 +483,7 @@ $.ajax({
   url: 'https://api.spotify.com/v1/me/player/previous',
   data: { device_id: window.device },
   headers: {
-  'Authorization': ' Bearer ' + window.access_token
+  'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
 	console.log(data)
@@ -497,7 +497,7 @@ $.ajax({
   url: 'https://api.spotify.com/v1/me/player/next',
   data: { device_id: window.device },
   headers: {
-  'Authorization': ' Bearer ' + window.access_token
+  'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
 	console.log(data)
@@ -510,7 +510,7 @@ $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 			},
   success: function (response, data) {
 	if ( response.shuffle_state == true ) {
@@ -518,7 +518,7 @@ $.ajax({
 			type: 'PUT',
 			url: 'https://api.spotify.com/v1/me/player/shuffle?state=false',
   			headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 			},
   			success: function (response, data) {
 				console.log(data);
@@ -532,7 +532,7 @@ $.ajax({
 			type: 'PUT',
 			url: 'https://api.spotify.com/v1/me/player/shuffle?state=true',
   			headers: {
-		   	 	Authorization: 'Bearer ' + window.access_token,
+		   	 	Authorization: 'Bearer ' + authT.access_token,
 			},
   			success: function (response, data) {
 				console.log(data);
@@ -547,7 +547,7 @@ $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 			},
   success: function (response, data) {
 	if ( response != "" && response != undefined && response.item.id != "" && response.item.id != undefined ) {
@@ -559,7 +559,7 @@ $.ajax({
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
 	  headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 				},
 	  success: function (response, data) {
 	   if ( response != undefined && response != "" && response.repeat_state == "context" ) {
@@ -580,7 +580,7 @@ $.ajax({
 	type: 'PUT',
   url: 'https://api.spotify.com/v1/me/player/repeat?state=track',
   headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 	},
   success: function (response, data) {
 	console.log("Track loop enabled");
@@ -592,7 +592,7 @@ function reloop(){
 	type: 'PUT',
   url: 'https://api.spotify.com/v1/me/player/repeat?state=context',
   headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 	},
   success: function (response, data) {
 	console.log("Context loop enabled");
@@ -604,7 +604,7 @@ function unloop() {
 	type: 'PUT',
   url: 'https://api.spotify.com/v1/me/player/repeat?state=off',
   headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 	},
   success: function (response, data) {
 	console.log("Loop disabled");
@@ -640,9 +640,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Error handling
   player.addListener('initialization_error', ({ message }) => { console.error(message); sessionStorage.setItem('HDRM', undefined);});
-  player.addListener('authentication_error', ({ message }) => { console.error(message);}); // Needs buetter handling but lack of DRM is a issue, that even I have
+  player.addListener('authentication_error', ({ message }) => { console.error(message); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/'); });
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+	// Lack of DRM support causes a break in init, but failure to auth is unrelated to DRM
 
   // Playback status updates
   player.addListener('player_state_changed', state => { console.log(state); });
@@ -678,7 +680,7 @@ state = state;
 		type: 'PUT',
 		url: 'https://api.spotify.com/v1/me/player',
 		headers: {
-			Authorization: 'Bearer ' + window.access_token,
+			Authorization: 'Bearer ' + authT.access_token,
 		},
 		data:JSON.stringify({device_ids: devid})
 		// if there was a no device error since the SDK is slow, we close the error dialog
@@ -701,13 +703,13 @@ $.ajax({
 	sessionStorage.setItem('access_token', response.access_token);
   }
 });
-window.access_token = sessionStorage.getItem('access_token');
+authT.access_token = sessionStorage.getItem('access_token');
 uri = sessionStorage.getItem('uri');
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
   },
   success: function (response, data) {
 	if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == true ) {
@@ -722,7 +724,7 @@ $.ajax({
 			title: "Whoops!",
 			text: "No device was found, please turn one on!",
 		});
-		sessionStorage.setItem('device', 'not found');
+		sessionStorage.setItem('device', null);
 	}
   }
 })
@@ -731,7 +733,7 @@ auth();
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
 	  headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 				},
 	  success: function (response, data) {
 			document.querySelectorAll("[class=slider_container] input")[1].value = response.device.volume_percent; // Sets volume slider to current state
@@ -741,7 +743,7 @@ $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
   },
   success: function (response, data) {
    if ( response != "" && response != undefined && response.is_playing == true ) {
@@ -757,7 +759,7 @@ $.ajax({
   headers: {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': ' Bearer ' + window.access_token
+  'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
   	if ( response != undefined && response.is_playing != false && response.is_playing != undefined){
@@ -771,10 +773,10 @@ $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 			},
   success: function (response, data) {
-	if (sessionStorage.getItem('device') != 'not found' && response != "" && response != undefined  && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "") {
+	if (sessionStorage.getItem('device') != "null" && response != "" && response != undefined  && response.item.id != "" && response.item.id != undefined && response.item != undefined && response != undefined && response != "") {
    	 sessionStorage.setItem('uri', response.item.id);
 	}
   }
@@ -785,7 +787,7 @@ $.ajax({
 	type: 'GET',
  	url: 'https://api.spotify.com/v1/tracks/' + uri,
   	headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 		},
   success: function (response, data) {
 	if ( response != undefined && response != "" && response.album.images[0].url != "" && response.album.images[0].url != undefined ) {
@@ -829,7 +831,7 @@ $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
   headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 			},
   success: function (response, data) {
   if (response != "" && response != undefined && response.item.id != "" && response.item.id != undefined ){
@@ -837,7 +839,7 @@ $.ajax({
 		type: 'GET',
   	url: 'https://api.spotify.com/v1/tracks/' + response.item.id,
 	  	headers: {
-		   	 Authorization: 'Bearer ' + window.access_token,
+		   	 Authorization: 'Bearer ' + authT.access_token,
 		},
   	success: function (response, data) {
 		if ( response != undefined && response != "" && response.duration_ms != "" && response.duration_ms != undefined) {
@@ -854,7 +856,7 @@ $.ajax({
   headers: {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': ' Bearer ' + window.access_token
+  'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
 	if ( response != undefined && response != "" && response.item.name != "" && response.item.name != undefined && response.item.name != "" ) {
@@ -870,7 +872,7 @@ $.ajax({
   	headers: {
   		'Accept': 'application/json',
   		'Content-Type': 'application/json',
-  		'Authorization': ' Bearer ' + window.access_token
+  		'Authorization': ' Bearer ' + authT.access_token
   	},
   	success: function (response, data) {
 		if ( response != undefined && response != "" && response.item.artists[0].name != "" && response.item.artists[0].name != undefined ) {
@@ -884,7 +886,7 @@ $.ajax({
 	  type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
 	  headers: {
-			   	 Authorization: 'Bearer ' + window.access_token,
+			   	 Authorization: 'Bearer ' + authT.access_token,
 				},
 	  success: function (response, data) {
 	   if ( response != undefined && response != "" && response.repeat_state == "context" ) {
