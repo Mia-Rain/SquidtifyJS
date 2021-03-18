@@ -295,6 +295,7 @@ $.ajax({
 					sessionStorage.setItem('refresh_token', response.refresh_token);
 		},
 		error: function () {
+			console.log("ERROR IN TOKEN GEN");
 			window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
 		}
 });
@@ -308,6 +309,7 @@ function auth(){
 				sessionStorage.setItem('access_token', response.access_token);
 			  },
 			  error: function (xhr, ajaxOptions, thrownError) {
+					console.log("ERROR IN AUTH()")
 			   	window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
 			  }
 	});
@@ -643,7 +645,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Error handling
   player.addListener('initialization_error', ({ message }) => { console.error(message); sessionStorage.setItem('HDRM', undefined);});
-  player.addListener('authentication_error', ({ message }) => { console.error(message); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/'); });
+  p<layer.addListener('authentication_error', ({ message }) => { console.error(message); console.log("ERROR IN PLAYER AUTH"); window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/'); });
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
 
