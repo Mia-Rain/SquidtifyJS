@@ -319,11 +319,11 @@ var authT = {
 	},
 	get refresh_token() {
 		return this.retoken = val;
-	}
+	},
 	get access_token() {
 		auth();
 		return authT.access_token
-	}
+	},
 }
 authT.refresh_token = sessionStorage.getItem('refresh_token');
 
