@@ -320,9 +320,12 @@ var authT = {
 	get refresh_token() {
 		return this.retoken = val;
 	},
+	set access_token(val) {
+		return this.actoken = val;
+	},
 	get access_token() {
 		auth();
-		return this.access_token
+		return this.actoken;
 	},
 }
 authT.refresh_token = sessionStorage.getItem('refresh_token');
