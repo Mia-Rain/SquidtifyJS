@@ -281,7 +281,7 @@ $.ajax({
 		Authorization: 'Bearer ' + authT.access_token,
 	},
 	success: function (response, data) {
-		if ( response !== undefined && response.state !== undefined ) {
+		if ( response !== undefined && response.repate_state !== undefined ) {
 			switch (response.repeat_state) {
 			case "track":
 				document.getElementById("track").classList.add("fa-circle");
@@ -348,12 +348,12 @@ function repeat(){
 		Authorization: 'Bearer ' + authT.access_token,
 	},
   	  success: function (response, data) {
-  	  if ( response !== undefined && response.state !== undefined ) {
+  	  if ( response !== undefined && response.repeat_state !== undefined ) {
            switch (response.repeat_state) {
            case "track":
             document.getElementById("track").classList.remove("fa-circle");
             document.getElementById("track").classList.remove("context_loop");
-            document.getElementById("loop").style.color = "null";
+            document.getElementById("loop").style.color = null;
             unloop();
            break;
            case "":
