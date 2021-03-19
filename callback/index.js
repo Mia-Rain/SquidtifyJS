@@ -15,6 +15,9 @@ var authT = {
 	get refresh_token() {
     if (urlParams.get('code') !== null) {
       var code = urlParams.get('code');
+    } else if (sessionStorage.getItem('refresh_token') !== null) {
+      return sessionStorage.getItem('refresh_token');
+    }
       $.ajax({
         type: 'POST',
         url: "https://accounts.spotify.com/api/token",
@@ -46,9 +49,6 @@ var authT = {
     		}
       });
       return sessionStorage.getItem('refresh_token');
-    } else if (sessionStorage.getItem('refresh_token') !== null) {
-        return sessionStorage.getItem('refresh_token');
-    }
   },
 	get access_token() {
 		$.ajax({
