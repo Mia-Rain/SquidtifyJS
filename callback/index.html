@@ -806,7 +806,7 @@ $.ajax({
   headers: {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': ' Bearer ' + auth.Taccess_token
+  'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
 	if (sessionStorage.getItem('device') != 'null' || response !== undefined) {
