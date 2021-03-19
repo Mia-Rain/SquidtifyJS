@@ -8,51 +8,67 @@ function mills(millis) {
   var seconds = ((millis % 60000) / 1000).toFixed(0);
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
-$.ajax({
-			type: 'POST',
-			url: "https://accounts.spotify.com/api/token",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			dataType: 'json',
-			data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/callback/', code, 'grant_type': "authorization_code" },
-			success: function (response, data) {
-					console.log(response);
-			console.log(data);
-					sessionStorage.setItem('refresh_token', response.refresh_token);
-		},
-		error: function () {
-			console.log("ERROR IN TOKEN GEN");
-			//window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
-		}
-});
+
+document.getElementById('li').style.setProperty('display', 'none', 'important'); // Force hide 'li'
+
 var authT = {
-	set refresh_token(val) {
-		return this.retoken = val;
-	},
 	get refresh_token() {
-		return this.retoken;
-	},
+    if (urlParams.get('code') !== null) {
+      $.ajax({
+        type: 'POST',
+        url: "https://accounts.spotify.com/api/token",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/callback/', code, 'grant_type': "authorization_code" },
+        success: function (response, data) {
+          console.log(response);
+          console.log(data);
+          sessionStorage.setItem('refresh_token', response.refresh_token);
+          return this.retoken = sessionStorage.getItem('refresh_token');
+    		},
+    		error: function () {
+          console.log("ERROR IN TOKEN GEN");
+          swal({
+            title: "ERROR IN TOKEN GEN!",
+            text: "There was a error in requesting the Refresh Token... We need to restart...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((reload) => {
+            if (reload) {
+              window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+            } else {
+              swal.close();
+            }
+          });
+    		}
+      });
+    } else if sessionStorage.getItem('refresh_token') !== null {
+        return this.retoken = sessionStorage.getItem('refresh_token');
+    }
+  },
 	get access_token() {
 		$.ajax({
-		  		  type: 'POST',
-					  url: 'https://accounts.spotify.com/api/token',
-			  		  contentType: 'application/x-www-form-urlencoded',
-					  data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': authT.refresh_token },
-			  		  success: function (response, data) {
-						sessionStorage.setItem('access_token', response.access_token);
-					  },
-					  error: function (xhr, ajaxOptions, thrownError) {
-							console.log("ERROR IN AUTH()")
-					   	//window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
-					  }
+      type: 'POST',
+      url: 'https://accounts.spotify.com/api/token',
+      contentType: 'application/x-www-form-urlencoded',
+      data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': authT.refresh_token },
+        success: function (response, data) {
+        sessionStorage.setItem('access_token', response.access_token);
+			},
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log("ERROR IN AUTH()")
+        window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+      }
 		});
 		return this.actoken = sessionStorage.getItem('access_token');
 	},
 }
-authT.refresh_token = sessionStorage.getItem('refresh_token');
 
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since they ugly
-document.getElementById('li').style.setProperty('display', 'none', 'important'); // Force hide 'li'
+
 // WP-SWITCHER
 wps = ["https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/shift.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/spin.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/water.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/the-blood-is-there.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/im-crying.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/blended.png","https://github.com/ThatGeekyWeeb/Squid-Dots/raw/master/wallpapers/clouds.png"];
 sessionStorage.setItem('num', 0);
@@ -90,33 +106,31 @@ function li() {
 	if (document.querySelectorAll("[class=player]")[0].style.display  == 'none') {document.querySelectorAll("[class=player]")[0].style.display = null;} else {document.querySelectorAll("[class=player]")[0].style.display = 'none';}
 	if (document.getElementById('li').style.display == 'none') {document.getElementById('li').style.display = null;} else {document.getElementById('li').style.setProperty('display', 'none', 'important');}
 } // licensing
-//
-console.stdlog = console.log.bind(console);
-console.logs = [];
-console.log = function(){
-	console.logs.push(Array.from(arguments));
-	console.stdlog.apply(console, arguments);
+// WP SWITCHER END
+
+
+var api = {
+  get dev() {
+    $.ajax({
+    		type: 'GET',
+    		url: "https://api.spotify.com/v1/me/player/devices",
+    			contentType: 'application/x-www-form-urlencoded',
+    			Accept: 'application/json',
+    			data: { 'access_token': authT.access_token },
+    			success: function (response, data) {
+    		if (response.devices[0] === null || response.devices[0] === undefined) {
+    		   		sessionStorage.setItem('device', null);
+    			console.log('No device!!!');
+    		   	} else {
+    			   		sessionStorage.setItem('device', response.devices[0].id);
+    		   		console.log(response.devices[0].id);
+    			  }
+    		}
+    })
+    return this.devID = sessionStorage.getItem('device');
+  },
 }
 
-function device_get() {
-$.ajax({
-		type: 'GET',
-		url: "https://api.spotify.com/v1/me/player/devices",
-			contentType: 'application/x-www-form-urlencoded',
-			Accept: 'application/json',
-			data: { 'access_token': authT.access_token },
-			success: function (response, data) {
-		if (response.devices[0] === null || response.devices[0] === undefined) {
-		   		sessionStorage.setItem('device', null);
-			console.log('No device!!!');
-		   	} else {
-			   		sessionStorage.setItem('device', response.devices[0].id);
-		   		console.log(response.devices[0].id);
-			}
-			}
-})
-window.device = sessionStorage.getItem('device');
-}
 function pause() {
 device_get();
 $.ajax({
@@ -176,24 +190,14 @@ function pauseplay() {
 	   		sessionStorage.setItem('playback', 'paused');}
    	   }
 });
-if ( sessionStorage.getItem('playback') == 'playing' ) {
-	if (console.logs[console.logs.length - 1] == "Paused") {
-		resume();
-	} else {
-	  		pause();
-	  		sessionStorage.setItem('replay', 'paused');
-	}
-} else if ( sessionStorage.getItem('playback') == 'paused' ) {
-	  if (console.logs[console.logs.length - 1] == "Resumed") {
-		  pause();
-	  } else {
-	  	resume();
-	  	sessionStorage.setItem('replay', 'resumed');
-	  }
+  if ( sessionStorage.getItem('playback') == 'playing' ) {
+    resume();
+  } else if ( sessionStorage.getItem('playback') == 'paused' ) {
+	   pause();
 	}
 }
-document.body.onkeyup = function(e){
-	if(e.keyCode == 32){
+document.body.onkeyup = function(space){
+	if(space.keyCode == 32){
 	   pauseplay();
 	}
 }
@@ -207,7 +211,7 @@ $.ajax({
   'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
-	console.log(data)
+	   console.log(data)
   }
 });
 }
