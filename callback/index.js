@@ -110,7 +110,7 @@ function li() {
 
 
 var api = {
-  get dev() {
+  get device() {
     $.ajax({
     		type: 'GET',
     		url: "https://api.spotify.com/v1/me/player/devices",
@@ -132,11 +132,10 @@ var api = {
 }
 
 function pause() {
-device_get();
 $.ajax({
 		type: 'PUT',
 		url: "https://api.spotify.com/v1/me/player/pause",
-			data: { device_id: window.device },
+			data: { device_id: api.device },
 			headers: {
 		   	 Authorization: 'Bearer ' + authT.access_token,
 		   	 'Accept': 'application/json',
@@ -148,7 +147,6 @@ $.ajax({
 })
 }
 function resume(){
-device_get();
 $.ajax({
 		type: 'PUT',
 		url: "https://api.spotify.com/v1/me/player/play",
@@ -202,11 +200,10 @@ document.body.onkeyup = function(space){
 	}
 }
 function prevTrack() {
-device_get();
 $.ajax({
   type: 'post',
   url: 'https://api.spotify.com/v1/me/player/previous',
-  data: { device_id: window.device },
+  data: { device_id: api.device },
   headers: {
   'Authorization': ' Bearer ' + authT.access_token
   },
@@ -216,11 +213,10 @@ $.ajax({
 });
 }
 function nextTrack() {
-device_get();
 $.ajax({
   type: 'post',
   url: 'https://api.spotify.com/v1/me/player/next',
-  data: { device_id: window.device },
+  data: { device_id: api.device },
   headers: {
   'Authorization': ' Bearer ' + authT.access_token
   },
@@ -352,8 +348,6 @@ document.getElementById("loop").style.color = "darkorchid";
 	}
 }
 uri = sessionStorage.getItem('uri');
-device_get();
-// SDK handling goes here
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = '[My Spotify Web API access token]';
   const player = new Spotify.Player({
@@ -416,7 +410,6 @@ if ( sessionStorage.getItem('HDRM') != "undefined" || sessionStorage.getItem('de
 } // Only run trans() if SDK is working or device is unset
 //
 setInterval(function() {
-device_get();
 $.ajax({
   type: 'POST',
   url: 'https://accounts.spotify.com/api/token',
