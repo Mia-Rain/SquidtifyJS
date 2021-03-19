@@ -38,7 +38,7 @@ var authT = {
           })
           .then((reload) => {
             if (reload) {
-              window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+              // window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
             } else {
               swal.close();
             }
@@ -60,7 +60,7 @@ var authT = {
 			},
       error: function (xhr, ajaxOptions, thrownError) {
         console.log("ERROR IN AUTH()")
-        window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+        //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
       }
 		});
 		return this.actoken = sessionStorage.getItem('access_token');
