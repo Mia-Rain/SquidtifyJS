@@ -19,5 +19,7 @@ jobs:
         target_branch: gh-pages
         build_dir: /
         domain: thatgeekyweeb.is-dummy-thi.cc
+        repo: github.com/ThatGeekyWeeb/rewrite-squidtify.git
+        committer: Mia <thatgeekyweeb@gmail.com>
       env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
