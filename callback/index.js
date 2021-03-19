@@ -11,43 +11,39 @@ function mills(millis) {
 
 document.getElementById('li').style.setProperty('display', 'none', 'important'); // Force hide 'li'
 
+/*TOKEN GEN*/$.ajax({
+  type: 'POST',
+  url: "https://accounts.spotify.com/api/token",
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+  dataType: 'json',
+  data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/callback/', code, 'grant_type': "authorization_code" },
+  success: function (response, data) {
+    console.log(response);
+    console.log(data);
+    sessionStorage.setItem('refresh_token', response.refresh_token);
+  },
+  error: function () {
+    console.log("ERROR IN TOKEN GEN");
+    swal({
+      title: "ERROR IN TOKEN GEN!",
+      text: "There was a error in requesting the Refresh Token... We need to restart...",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((reload) => {
+      if (reload) {
+        window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+      } else {
+        swal.close();
+      }
+    });
+  }
+});
+
 var authT = {
 	get refresh_token() {
-    if (urlParams.get('code') !== null) {
-      var code = urlParams.get('code');
-    } else if (sessionStorage.getItem('refresh_token') !== null) {
-      return sessionStorage.getItem('refresh_token');
-    }
-      $.ajax({
-        type: 'POST',
-        url: "https://accounts.spotify.com/api/token",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-        dataType: 'json',
-        data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/callback/', code, 'grant_type': "authorization_code" },
-        success: function (response, data) {
-          console.log(response);
-          console.log(data);
-          sessionStorage.setItem('refresh_token', response.refresh_token);
-    		},
-    		error: function () {
-          console.log("ERROR IN TOKEN GEN");
-          swal({
-            title: "ERROR IN TOKEN GEN!",
-            text: "There was a error in requesting the Refresh Token... We need to restart...",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((reload) => {
-            if (reload) {
-              // window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
-            } else {
-              swal.close();
-            }
-          });
-    		}
-      });
       return sessionStorage.getItem('refresh_token');
   },
 	get access_token() {
