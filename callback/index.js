@@ -45,7 +45,7 @@ var authT = {
           });
     		}
       });
-    } else if sessionStorage.getItem('refresh_token') !== null {
+    } else if (sessionStorage.getItem('refresh_token') !== null) {
         return this.retoken = sessionStorage.getItem('refresh_token');
     }
   },
