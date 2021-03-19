@@ -299,22 +299,6 @@ $.ajax({
 			//window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
 		}
 });
-function auth(){
-	$.ajax({
-  		  type: 'POST',
-			  url: 'https://accounts.spotify.com/api/token',
-	  		  contentType: 'application/x-www-form-urlencoded',
-			  data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': authT.refresh_token },
-	  		  success: function (response, data) {
-				sessionStorage.setItem('access_token', response.access_token);
-			  },
-			  error: function (xhr, ajaxOptions, thrownError) {
-					console.log("ERROR IN AUTH()")
-			   	//window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
-			  }
-	});
-	authT.access_token = sessionStorage.getItem('access_token');
-}
 var authT = {
 	set refresh_token(val) {
 		return this.retoken = val;
@@ -322,17 +306,25 @@ var authT = {
 	get refresh_token() {
 		return this.retoken;
 	},
-	set access_token(val) {
-		return this.actoken = val;
-	},
-	get access_token() {
-		auth();
-		return this.actoken;
+	get access_token(val) {
+		$.ajax({
+		  		  type: 'POST',
+					  url: 'https://accounts.spotify.com/api/token',
+			  		  contentType: 'application/x-www-form-urlencoded',
+					  data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': authT.refresh_token },
+			  		  success: function (response, data) {
+						sessionStorage.setItem('access_token', response.access_token);
+					  },
+					  error: function (xhr, ajaxOptions, thrownError) {
+							console.log("ERROR IN AUTH()")
+					   	//window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+					  }
+		});
+		return this.actoken = sessionStorage.getItem('access_token');
 	},
 }
 authT.refresh_token = sessionStorage.getItem('refresh_token');
 
-auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since they ugly
 document.getElementById('li').style.setProperty('display', 'none', 'important'); // Force hide 'li'
 // WP-SWITCHER
@@ -381,7 +373,6 @@ console.log = function(){
 }
 
 function device_get() {
-auth();
 $.ajax({
 		type: 'GET',
 		url: "https://api.spotify.com/v1/me/player/devices",
@@ -446,7 +437,6 @@ $.ajax({
 })
 }
 function pauseplay() {
-auth();
 	$.ajax({
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
@@ -510,7 +500,6 @@ $.ajax({
 });
 }
 function shuffle() {
-auth();
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -547,7 +536,6 @@ $.ajax({
 			}
 		});}}
 });}
-auth();
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -640,7 +628,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   const token = '[My Spotify Web API access token]';
   const player = new Spotify.Player({
 	name: 'Web Playback SDK Quick Start Player',
-	getOAuthToken: callback => { auth(); ;callback(sessionStorage.getItem('access_token'));}
+	getOAuthToken: callback => { callback(sessionStorage.getItem('access_token'));}
   });
 
   // Error handling
@@ -708,7 +696,6 @@ $.ajax({
 	sessionStorage.setItem('access_token', response.access_token);
   }
 });
-authT.access_token = sessionStorage.getItem('access_token');
 uri = sessionStorage.getItem('uri');
 $.ajax({
 	type: 'GET',
@@ -733,7 +720,6 @@ $.ajax({
 	}
   }
 })
-auth();
 	$.ajax({
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
@@ -820,7 +806,7 @@ $.ajax({
   headers: {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': ' Bearer ' + access_token
+  'Authorization': ' Bearer ' + auth.Taccess_token
   },
   success: function (response, data) {
 	if (sessionStorage.getItem('device') != 'null' || response !== undefined) {
