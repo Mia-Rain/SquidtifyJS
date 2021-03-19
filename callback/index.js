@@ -109,20 +109,22 @@ function li() {
 var api = {
   get device() {
     $.ajax({
-    		type: 'GET',
-    		url: "https://api.spotify.com/v1/me/player/devices",
-    			contentType: 'application/x-www-form-urlencoded',
-    			Accept: 'application/json',
-    			data: { 'access_token': authT.access_token },
-    			success: function (response, data) {
-    		if (response.devices[0] === null || response.devices[0] === undefined) {
-    		   		sessionStorage.setItem('device', null);
-    			console.log('No device!!!');
-    		   	} else {
-    			   		sessionStorage.setItem('device', response.devices[0].id);
-    		   		console.log(response.devices[0].id);
-    			  }
-    		}
+      type: 'GET',
+      url: "https://api.spotify.com/v1/me/player/devices",
+      contentType: 'application/x-www-form-urlencoded',
+      Accept: 'application/json',
+      data: { 'access_token': authT.access_token },
+      success: function (response, data) {
+        var i;
+        for (i in response.devices) {
+          if ( response.devices[i].is_active === true ) {
+            sessionStorage.setItem('device',response.devices[i].id);
+          }
+          if (i == response.devices - 1) {
+            sessionStorage.setItem('device',response.devices[0].id);
+          }
+        }
+      }
     })
     return sessionStorage.getItem('device');
   },
