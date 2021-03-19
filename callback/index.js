@@ -14,6 +14,7 @@ document.getElementById('li').style.setProperty('display', 'none', 'important');
 var authT = {
 	get refresh_token() {
     if (urlParams.get('code') !== null) {
+      var code = urlParams.get('code');
       $.ajax({
         type: 'POST',
         url: "https://accounts.spotify.com/api/token",
@@ -25,7 +26,6 @@ var authT = {
           console.log(response);
           console.log(data);
           sessionStorage.setItem('refresh_token', response.refresh_token);
-          return this.retoken = sessionStorage.getItem('refresh_token');
     		},
     		error: function () {
           console.log("ERROR IN TOKEN GEN");
@@ -45,8 +45,9 @@ var authT = {
           });
     		}
       });
+      return sessionStorage.getItem('refresh_token');
     } else if (sessionStorage.getItem('refresh_token') !== null) {
-        return this.retoken = sessionStorage.getItem('refresh_token');
+        return sessionStorage.getItem('refresh_token');
     }
   },
 	get access_token() {
@@ -63,7 +64,7 @@ var authT = {
         //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
       }
 		});
-		return this.actoken = sessionStorage.getItem('access_token');
+		return sessionStorage.getItem('access_token');
 	},
 }
 
@@ -127,7 +128,7 @@ var api = {
     			  }
     		}
     })
-    return this.devID = sessionStorage.getItem('device');
+    return sessionStorage.getItem('device');
   },
 }
 
