@@ -275,32 +275,33 @@ $.ajax({
   }
 })
 $.ajax({
-		type: 'GET',
-	  url: 'https://api.spotify.com/v1/me/player',
-	  headers: {
-			   	 Authorization: 'Bearer ' + authT.access_token,
-				},
-	  success: function (response, data) {
-	   if ( response !== undefined && response.state !== undefined ) {
-       switch (response.repeat_state) {
-         case "track":
-          document.getElementById("track").classList.add("fa-circle");
-          document.getElementById("track").classList.remove("context_loop");
-          document.getElementById("loop").style.color = "darkorchid";
-        break;
-        case "":
-        case null:
-        case "off":
-          document.getElementById("loop").style.color = null;
-          document.getElementById("track").classList.remove("fa-circle");
-        break;
-        case "context":
-          document.getElementById("track").classList.remove("fa-circle");
-          document.getElementById("track").classList.add("context_loop");
-          document.getElementById("loop").style.color = "darkorchid";
-        break;
-       }
-     }
+	type: 'GET',
+	url: 'https://api.spotify.com/v1/me/player',
+	headers: {
+		Authorization: 'Bearer ' + authT.access_token,
+	},
+	success: function (response, data) {
+		if ( response !== undefined && response.state !== undefined ) {
+			switch (response.repeat_state) {
+			case "track":
+				document.getElementById("track").classList.add("fa-circle");
+				document.getElementById("track").classList.remove("context_loop");
+				document.getElementById("loop").style.color = "darkorchid";
+			break;
+			case "":
+			case null:
+			case "off":
+				document.getElementById("loop").style.color = null;
+				document.getElementById("track").classList.remove("fa-circle");
+			break;
+			case "context":
+				document.getElementById("track").classList.remove("fa-circle");
+				document.getElementById("track").classList.add("context_loop");
+				document.getElementById("loop").style.color = "darkorchid";
+        		break;
+       			}
+     		}
+	}
 });
 function loop() {
 $.ajax({
@@ -341,36 +342,37 @@ function unloop() {
 
 function repeat(){
   $.ajax({
-  		type: 'GET',
-  	  url: 'https://api.spotify.com/v1/me/player',
-  	  headers: {
-  			   	 Authorization: 'Bearer ' + authT.access_token,
-  				},
+	type: 'GET',
+	url: 'https://api.spotify.com/v1/me/player',
+	headers: {
+		Authorization: 'Bearer ' + authT.access_token,
+	},
   	  success: function (response, data) {
-  	   if ( response !== undefined && response.state !== undefined ) {
-         switch (response.repeat_state) {
+  	  if ( response !== undefined && response.state !== undefined ) {
+           switch (response.repeat_state) {
            case "track":
             document.getElementById("track").classList.remove("fa-circle");
             document.getElementById("track").classList.remove("context_loop");
             document.getElementById("loop").style.color = "null";
             unloop();
-          break;
-          case "":
-          case null:
-          case "off":
+           break;
+           case "":
+           case null:
+           case "off":
             document.getElementById("loop").style.color = "darkorchid";
             document.getElementById("track").classList.remove("fa-circle");
             document.getElementById("track").classList.add("context_loop");
             reloop();
-          break;
-          case "context":
+           break;
+           case "context":
             document.getElementById("track").classList.add("fa-circle");
             document.getElementById("track").classList.remove("context_loop");
             document.getElementById("loop").style.color = "darkorchid";
             loop();
-          break;
-         }
-       }
+           break;
+           }
+          }
+	 }
   });
 }
 uri = sessionStorage.getItem('uri');
