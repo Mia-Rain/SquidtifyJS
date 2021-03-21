@@ -121,8 +121,9 @@ var api = {
           if ( response.devices[i].is_active === true ) {
             sessionStorage.setItem('device',response.devices[i].id);
           }
-          if (i == response.devices - 1) {
+          if (i == response.devices.length - 1) {
             sessionStorage.setItem('device',response.devices[0].id);
+            trans(response.devices[0].id);
           }
         }
       }
@@ -420,8 +421,8 @@ if (
 state = state;
 });
 };
-  function trans(){
-	  devid = [window.device]; $.ajax({
+  function trans(id){
+	  devid = [id]; $.ajax({
 		type: 'PUT',
 		url: 'https://api.spotify.com/v1/me/player',
 		headers: {
@@ -433,7 +434,7 @@ state = state;
   });
   }
 if ( sessionStorage.getItem('HDRM') != "undefined" || sessionStorage.getItem('device') != "null") {
-  trans(); console.log('Trans-ed');
+  trans(api.device); console.log('Trans-ed');
   if (swal.getState().isOpen == true){ swal.close(); }
 } // Only run trans() if SDK is working or device is unset
 //
