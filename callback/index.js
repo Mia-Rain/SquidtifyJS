@@ -132,11 +132,11 @@ var api = {
   },
 }
 
-function pause() {
+function pause(id) {
 $.ajax({
 		type: 'PUT',
 		url: "https://api.spotify.com/v1/me/player/pause",
-			data: { device_id: api.device },
+			data: { device_id: id },
 			headers: {
 		   	 Authorization: 'Bearer ' + authT.access_token,
 		   	 'Accept': 'application/json',
@@ -147,7 +147,7 @@ $.ajax({
 			}
 })
 }
-function resume(){
+function resume() {
 $.ajax({
 		type: 'PUT',
 		url: "https://api.spotify.com/v1/me/player/play",
@@ -176,24 +176,23 @@ $.ajax({
 })
 }
 function pauseplay() {
-	$.ajax({
-		type: 'GET',
-	  url: 'https://api.spotify.com/v1/me/player',
-	  headers: {
-			   	 Authorization: 'Bearer ' + authT.access_token,
-				},
-	  success: function (response, data) {
-	   if ( response.is_playing == true  ) {
-	   		sessionStorage.setItem('playback', 'playing');
-   	   } else if ( response.is_playing == false ) {
-	   		sessionStorage.setItem('playback', 'paused');}
-   	   }
-});
-  if ( sessionStorage.getItem('playback') == 'playing' ) {
-    resume();
-  } else if ( sessionStorage.getItem('playback') == 'paused' ) {
-	   pause();
-	}
+   $.ajax({
+    type: 'GET',
+    url: 'https://api.spotify.com/v1/me/player',
+    headers: {
+           Authorization: 'Bearer ' + authT.access_token,
+        },
+    success: function (response, data) {
+    	switch (response.is_playing) {
+      case true:
+				pause(api.device);
+			break;
+      default:
+				resume();
+			break;
+      }
+    }
+  });
 }
 document.body.onkeyup = function(space){
 	if(space.keyCode == 32){
