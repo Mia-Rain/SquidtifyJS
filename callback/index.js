@@ -389,7 +389,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   player.addListener('account_error', ({ message }) => { console.error(message); });
   player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-	// Lack of DRM support causes a break in init, but failure to auth is unrelated to DRM
+	// Lack of DRM support causes a break in init, but failure to auth can still be related to DRM
 
   // Playback status updates
   player.addListener('player_state_changed', state => { console.log(state); });
@@ -397,6 +397,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   player.addListener('ready', ({ device_id }) => {
 	  console.log('Ready with Device ID', device_id);
+    api.device; // This __should__ call trans() __if__ a device is not already playing
+    if (swal.getState().isOpen){ swal.close(); } // Close any swal box...
   });
   // Not Ready
   player.addListener('not_ready', ({ device_id }) => {
@@ -432,10 +434,6 @@ state = state;
 		// 			FIX ME
   });
   }
-if ( sessionStorage.getItem('HDRM') != "undefined" || sessionStorage.getItem('device') != "null") {
-  trans(api.device); console.log('Trans-ed');
-  if (swal.getState().isOpen == true){ swal.close(); }
-} // Only run trans() if SDK is working or device is unset
 //
 setInterval(function() {
 $.ajax({
