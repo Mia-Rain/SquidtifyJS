@@ -56,13 +56,13 @@ var authT = {
         sessionStorage.setItem('access_token', response.access_token);
 			},
       error: function (xhr, ajaxOptions, thrownError) {
-        console.log("ERROR IN AUTH()")
+        console.log("ERROR IN AUTH()");
         //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
       }
 		});
 		return sessionStorage.getItem('access_token');
 	},
-}
+};
 
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since they ugly
 
@@ -127,10 +127,10 @@ var api = {
           }
         }
       }
-    })
+    });
     return sessionStorage.getItem('device');
   },
-}
+};
 
 function pause(id) {
 $.ajax({
@@ -145,7 +145,7 @@ $.ajax({
 			success: function () {
 					console.log('Paused');
 			}
-})
+});
 }
 function resume() {
 $.ajax({
@@ -160,7 +160,7 @@ $.ajax({
 			success: function () {
 					console.log('Resumed');
 			}
-})
+});
 }
 function seekTo() {
 console.log('seeking');
@@ -173,7 +173,7 @@ $.ajax({
   	Authorization: 'Bearer ' + authT.access_token,
   },
   success: function (response, data) {console.log(response);}
-})
+});
 }
 function pauseplay() {
    $.ajax({
@@ -198,7 +198,7 @@ document.body.onkeyup = function(space){
 	if(space.keyCode == 32){
 	   pauseplay();
 	}
-}
+};
 function prevTrack() {
 $.ajax({
   type: 'post',
@@ -208,7 +208,7 @@ $.ajax({
   'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
-	   console.log(data)
+	   console.log(data);
   }
 });
 }
@@ -221,7 +221,7 @@ $.ajax({
   'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
-	console.log(data)
+	console.log(data);
   }
 });
 }
@@ -246,7 +246,7 @@ $.ajax({
 			error: function (error) {
 				console.log(error);
 			}
-  		})
+  		});
 	} else if ( response.shuffle_state == false ) {
 		  $.ajax({
 			type: 'PUT',
@@ -273,7 +273,7 @@ $.ajax({
 			sessionStorage.setItem('uri', response.item.id);
 	}
   }
-})
+});
 $.ajax({
 	type: 'GET',
 	url: 'https://api.spotify.com/v1/me/player',
@@ -313,7 +313,7 @@ $.ajax({
   success: function (response, data) {
 	console.log("Track loop enabled");
   }
-})
+});
 }
 function reloop(){
 	$.ajax({
@@ -325,7 +325,7 @@ function reloop(){
   success: function (response, data) {
 	console.log("Context loop enabled");
   }
-})
+});
 }
 function unloop() {
 	$.ajax({
@@ -337,7 +337,7 @@ function unloop() {
   success: function (response, data) {
 	console.log("Loop disabled");
   }
-})
+});
 }
 
 function repeat(){
@@ -410,15 +410,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 player.addListener("player_state_changed", (state) => {
 
 console.log(state);
-if (
-	state
-	&& state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id)
-	&& !state.paused
-	&& state.paused
-	) {
+if (state && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id) && !state.paused && state.paused) {
 	console.log('Track ended');
 	setTrackEnd(true);
-  }
+}
 state = state;
 });
 };
@@ -455,10 +450,10 @@ $.ajax({
   success: function (response, data) {
 	if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == true ) {
 		if ( document.getElementById("shuffle").style.color != "darkorchid" ) {
-			document.getElementById("shuffle").style.color = "darkorchid"
+			document.getElementById("shuffle").style.color = "darkorchid";
 		}
 	} else if ( sessionStorage.getItem('device') != undefined && response != "" && response != undefined && response.shuffle_state == false ) {
-			document.getElementById("shuffle").style.color = ""
+			document.getElementById("shuffle").style.color = "";
 	} else if ( sessionStorage.getItem('device') == "null" || sessionStorage.getItem('device') == 'not found' || sessionStorage.getItem('device') === null) {
 		swal({
 			icon: "error",
@@ -468,7 +463,7 @@ $.ajax({
 		sessionStorage.setItem('device', null);
 	}
   }
-})
+});
 	$.ajax({
 		type: 'GET',
 	  url: 'https://api.spotify.com/v1/me/player',
@@ -492,7 +487,7 @@ $.ajax({
 	document.getElementById("playbutton").classList = "fa fa-play-circle fa-5x";
    }
   }
-})
+});
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -520,7 +515,7 @@ $.ajax({
    	 sessionStorage.setItem('uri', response.item.id);
 	}
   }
-})
+});
 uri = sessionStorage.getItem('uri');
 if ( uri != undefined && uri != "" && sessionStorage.getItem('uri') != undefined && sessionStorage.getItem('uri') != "" ) {
 $.ajax({
@@ -530,24 +525,24 @@ $.ajax({
 		   	 Authorization: 'Bearer ' + authT.access_token,
 		},
   success: function (response, data) {
-	if ( response != undefined && response != "" && response.album.images[0].url != "" && response.album.images[0].url != undefined ) {
-	  document.getElementById("track-art").style.backgroundImage = '';
-	  document.getElementById("track-art").style.backgroundImage = 'URL("' + response.album.images[0].url + '")';
-	} else {
-	swal({
-		title: "Whao",
-		text: "The response from the server was not defined!",
-		icon: "error",
-		buttons: true,
-		dangerMode: true,
-	}).then((value) => {
-		if (`${value}` == "true") {
-			resume();
-		} else {console.error('Resume was refussed, you should reload the page, as it is broken now... Addtionally remeber to start playback')}
-	})
-	}
+	  if ( response != undefined && response != "" && response.album.images[0].url != "" && response.album.images[0].url != undefined ) {
+	    document.getElementById("track-art").style.backgroundImage = '';
+	    document.getElementById("track-art").style.backgroundImage = 'URL("' + response.album.images[0].url + '")';
+	  } else {
+	    swal({
+		    title: "Whao",
+		    text: "The response from the server was not defined!",
+		    icon: "error",
+		    buttons: true,
+		    dangerMode: true,
+	    }).then((value) => {
+		    if (`${value}` == "true") {
+			    resume();
+		    } else {console.error('Resume was refussed, you should reload the page, as it is broken now... Addtionally remeber to start playback');}
+	    });
+	  }
   }
-})
+});
 }
 $.ajax({
   type: 'GET',
@@ -558,15 +553,15 @@ $.ajax({
   'Authorization': ' Bearer ' + authT.access_token
   },
   success: function (response, data) {
-	if (sessionStorage.getItem('device') != 'null' || response !== undefined) {
+	  if (sessionStorage.getItem('device') != 'null' || response !== undefined) {
   		if ( parseInt(document.querySelector('input[type=range]').value, 10) == 1 || parseInt(document.querySelector('input[type=range]').value, 10) >= 90) {
-			document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
+			  document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
 			} else if ( ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) >= 0.5 || ((response.progress_ms * 100) / response.item.duration_ms) - parseInt(document.querySelector('input[type=range]').value, 10) < document.querySelector('input[type=range]').value ) {
 				document.querySelector('input[type=range]').value = Math.floor((response.progress_ms * 100) / response.item.duration_ms);
   		}
-	}
+	  }
   }
-})
+});
 $.ajax({
 	type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -587,9 +582,9 @@ $.ajax({
 				document.getElementById("durr").innerHTML = mills(response.duration_ms);
 		} else { document.getElementById("durr").innerHTML = 'Unset'; }
 		}
-	})}
+  });}
    }
-})
+});
 $.ajax({
   type: 'GET',
   url: 'https://api.spotify.com/v1/me/player',
@@ -601,11 +596,11 @@ $.ajax({
   success: function (response, data) {
 	if ( response != undefined && response != "" && response.item.name != "" && response.item.name != undefined && response.item.name != "" ) {
 		if ( document.getElementById("track-name").innerHTML != response.item.name ) {
-			document.getElementById("track-name").innerHTML = response.item.name
+			document.getElementById("track-name").innerHTML = response.item.name;
 		}
 	}
   }
-})
+});
 $.ajax({
 	type: 'GET',
   	url: 'https://api.spotify.com/v1/me/player',
@@ -617,7 +612,7 @@ $.ajax({
   	success: function (response, data) {
 		if ( response != undefined && response != "" && response.item.artists[0].name != "" && response.item.artists[0].name != undefined ) {
 			if ( document.getElementById("track-artist").innerHTML != response.item.artists[0].name ) {
-				document.getElementById("track-artist").innerHTML = response.item.artists[0].name
+				document.getElementById("track-artist").innerHTML = response.item.artists[0].name;
 			}
 		}
   	}
