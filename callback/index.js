@@ -51,11 +51,21 @@ document.getElementById("li").style.setProperty("display", "none", "important");
   },
 });
 
+// The following is an unedited snippet of code provided by diamondburned, thanks :)
 var authT = {
   get refresh_token() {
     return sessionStorage.getItem("refresh_token");
   },
   get access_token() {
+    while (true) {
+      try {
+        return this._access_token();
+      } catch (err) {
+        continue;
+      }
+    }
+  },
+  _access_token() {
     $.ajax({
       type: "POST",
       url: "https://accounts.spotify.com/api/token",
@@ -70,13 +80,13 @@ var authT = {
         sessionStorage.setItem("access_token", response.access_token);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        console.log("ERROR IN AUTH()");
-        //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/rewrite-squidtify/');
+        throw "error in auth()";
       },
     });
     return sessionStorage.getItem("access_token");
   },
 };
+//
 
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since they ugly
 
@@ -169,7 +179,18 @@ var api = {
     return sessionStorage.getItem("device");
   },
 };
-
+function setVolume(val) {
+  $.ajax({
+    type: "PUT",
+    url: "https://api.spotify.com/v1/me/player/volume?volume_percent=" + val,
+    headers: {
+      Authorization: "Bearer " + authT.access_token,
+    },
+    success: function (response, data) {
+      console.log(response);
+    },
+  });
+}
 function pause(id) {
   $.ajax({
     type: "PUT",
