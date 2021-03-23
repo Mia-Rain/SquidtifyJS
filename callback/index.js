@@ -16,7 +16,8 @@ document.getElementById("li").style.setProperty("display", "none", "important");
   url: "https://accounts.spotify.com/api/token",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   contentType: "application/x-www-form-urlencoded; charset=utf-8",
-  dataType: "json",
+  crossDomain: true,
+  dataType: "jsonp",
   data: {
     client_id: CLID,
     client_secret: CLSEC,
@@ -51,7 +52,7 @@ document.getElementById("li").style.setProperty("display", "none", "important");
   },
 });
 
-// The following is an unedited snippet of code provided by diamondburned, thanks :)
+// The following is a mostly unedited snippet of code provided by diamondburned, thanks :)
 var authT = {
   get refresh_token() {
     return sessionStorage.getItem("refresh_token");
@@ -70,6 +71,8 @@ var authT = {
       type: "POST",
       url: "https://accounts.spotify.com/api/token",
       contentType: "application/x-www-form-urlencoded",
+      crossDomain: true,
+      dataType: "jsonp",
       data: {
         client_id: sessionStorage.getItem("CLID"),
         client_secret: sessionStorage.getItem("CLSEC"),
