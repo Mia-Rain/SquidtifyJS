@@ -16,7 +16,7 @@ document.getElementById("li").style.setProperty("display", "none", "important");
   url: "https://accounts.spotify.com/api/token",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   contentType: "application/x-www-form-urlencoded; charset=utf-8",
-  crossDomain: true,
+ //  crossDomain: true, // using this header only causes problems.. 
   dataType: "json",
   data: {
     client_id: CLID,
@@ -58,7 +58,7 @@ var authT = {
     return sessionStorage.getItem("refresh_token");
   },
   get access_token() {
-    while (true) {
+  /*  while (true) {
       try {
         return this._access_token();
       } catch (err) {
@@ -66,12 +66,12 @@ var authT = {
       }
     }
   },
-  _access_token() {
+  _*/access_token() { // I have to disable DB's snippet since it causes more errors
     $.ajax({
       type: "POST",
       url: "https://accounts.spotify.com/api/token",
       contentType: "application/x-www-form-urlencoded",
-      crossDomain: true,
+      //crossDomain: true,
       dataType: "json",
       data: {
         client_id: sessionStorage.getItem("CLID"),
@@ -83,7 +83,8 @@ var authT = {
         sessionStorage.setItem("access_token", response.access_token);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        throw "error in auth()";
+        //throw "error in auth()";
+        console.log("error in auth()");
       },
     });
     return sessionStorage.getItem("access_token");
