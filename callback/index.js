@@ -17,7 +17,7 @@ document.getElementById("li").style.setProperty("display", "none", "important");
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   contentType: "application/x-www-form-urlencoded; charset=utf-8",
   crossDomain: true,
-  dataType: "jsonp",
+  dataType: "json",
   data: {
     client_id: CLID,
     client_secret: CLSEC,
@@ -72,7 +72,7 @@ var authT = {
       url: "https://accounts.spotify.com/api/token",
       contentType: "application/x-www-form-urlencoded",
       crossDomain: true,
-      dataType: "jsonp",
+      dataType: "json",
       data: {
         client_id: sessionStorage.getItem("CLID"),
         client_secret: sessionStorage.getItem("CLSEC"),
