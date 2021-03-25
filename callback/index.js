@@ -66,7 +66,7 @@ var authT = {
       }
     }
   },
-  _*/access_token() { // I have to disable DB's snippet since it causes more errors
+  _access_token() { */// I have to disable DB's snippet since it causes more errors
     $.ajax({
       type: "POST",
       url: "https://accounts.spotify.com/api/token",
