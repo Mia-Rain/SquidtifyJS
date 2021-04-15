@@ -22,7 +22,7 @@ document.getElementById("li").style.setProperty("display", "none", "important");
     client_id: CLID,
     client_secret: CLSEC,
     redirect_uri:
-      "https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/callback/",
+      "https://thatgeekyweeb.github.io/SquidtifyJS/callback/",
     code,
     grant_type: "authorization_code",
   },
@@ -43,7 +43,7 @@ document.getElementById("li").style.setProperty("display", "none", "important");
     }).then((reload) => {
       if (reload) {
         window.location.replace(
-          "https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/"
+          "https://thatgeekyweeb.github.io/SquidtifyJS/"
         );
       } else {
         swal.close();
@@ -469,7 +469,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   player.addListener("authentication_error", ({ message }) => {
     console.error(message);
     console.log("ERROR IN PLAYER AUTH");
-  }); //window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/SquidtifyJS/'); });
+  }); //window.location.replace('https://thatgeekyweeb.github.io/SquidtifyJS/'); });
   player.addListener("account_error", ({ message }) => {
     console.error(message);
   });
